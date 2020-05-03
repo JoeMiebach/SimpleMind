@@ -16,8 +16,8 @@ body {
 
 
 svg {
-    position: absolute;
-    overflow:scroll;
+    position: relative;
+    display:inline-block;
 }
 
 
