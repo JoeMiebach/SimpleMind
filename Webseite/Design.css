@@ -35,3 +35,7 @@ svg {
     height: 100vh;
     background: rgba(0,0,0, 0.2);
 }
+
+.draggable:hover {
+    cursor: move;
+}

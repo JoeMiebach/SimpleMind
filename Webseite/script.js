@@ -5,8 +5,20 @@ let mouse = {
 
 let elemSelected = null;
 
+//Mouse/ Elem Offset
+let xOffsetCircle, yOffsetCircle;
+let xOffsetOther, yOffsetOther;
+
+//Cords of the Outside Elem
+let xOutside, yOutside;
+
 function select(elem) {
     elemSelected = elem;
+    xOffsetCircle = mouse.x + document.getElementById("workingArea").scrollLeft - elemSelected.getAttribute("cx");
+    yOffsetCircle = mouse.y + document.getElementById("workingArea").scrollTop - elemSelected.getAttribute("cy");
+
+    xOffsetOther = mouse.x + document.getElementById("workingArea").scrollLeft - elemSelected.getAttribute("x");
+    yOffsetOther = mouse.y + document.getElementById("workingArea").scrollTop - elemSelected.getAttribute("y");
 }
 
 
@@ -16,23 +28,45 @@ function deselect(elem) {
 
 
 function findScreenCoords(mouseEvent) {
-    var xpos;
-    var ypos;
+    
 
     if (mouseEvent) {
         //FireFox
-        mouse.x = mouseEvent.screenX;
-        mouse.y = mouseEvent.screenY;
+        mouse.x = mouseEvent.clientX;
+        mouse.y = mouseEvent.clientY;
     } else {
         //IE
-        mouse.x = window.event.screenX;
-        mouse.y = window.event.screenY;
+        mouse.x = window.event.clientX;
+        mouse.y = window.event.clientY;
     }
 
-    if(elemSelected != null) {
-        elemSelected.style.cx = mouse.x;
+    
+
+    if (elemSelected != null) {
+        elemSelected.setAttribute('cx', mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetCircle);
+        elemSelected.setAttribute('cy', mouse.y + document.getElementById("workingArea").scrollTop - yOffsetCircle);
+
+        elemSelected.setAttribute('x', mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetOther);
+        elemSelected.setAttribute('y', mouse.y + document.getElementById("workingArea").scrollTop - yOffsetOther);
+
+
+        resizeSVG();
     }
+
 
 }
 
 document.getElementById("workingArea").onmousemove = findScreenCoords;
+
+function resizeSVG() {
+    var svg = document.getElementById("ID_SVG");
+    console.log(svg.getAttribute("width") + " " + elemSelected.getAttribute("x"));
+
+
+
+
+    if (parseInt(svg.getAttribute("width")) < parseInt(elemSelected.getAttribute("x")) + parseInt(elemSelected.getAttribute("width"))) {
+        console.log("resize");
+        svg.setAttribute("width", parseInt(svg.getAttribute("width")) + 100);
+    }
+}
