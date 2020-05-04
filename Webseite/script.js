@@ -4,6 +4,8 @@ let mouse = {
 }
 
 let elemSelected = null;
+let xoffsetCircle, yoffsetCircle;
+let xoffsetOther, yoffsetOther;
 
 //Mouse/ Elem Offset
 let xOffsetCircle, yOffsetCircle;
@@ -13,6 +15,7 @@ let xOffsetOther, yOffsetOther;
 let xOutside, yOutside;
 
 function select(elem) {
+    console.log("grab");
     elemSelected = elem;
     xOffsetCircle = mouse.x + document.getElementById("workingArea").scrollLeft - elemSelected.getAttribute("cx");
     yOffsetCircle = mouse.y + document.getElementById("workingArea").scrollTop - elemSelected.getAttribute("cy");
@@ -60,13 +63,14 @@ document.getElementById("workingArea").onmousemove = findScreenCoords;
 
 function resizeSVG() {
     var svg = document.getElementById("ID_SVG");
-    console.log(svg.getAttribute("width") + " " + elemSelected.getAttribute("x"));
 
-
-
-
-    if (parseInt(svg.getAttribute("width")) < parseInt(elemSelected.getAttribute("x")) + parseInt(elemSelected.getAttribute("width"))) {
+    if (svg.getAttribute("width") < elemSelected.getBoundingClientRect().x + elemSelected.getBoundingClientRect().width + document.getElementById("workingArea").scrollLeft) {
         console.log("resize");
-        svg.setAttribute("width", parseInt(svg.getAttribute("width")) + 100);
+        svg.setAttribute("width", elemSelected.getBoundingClientRect().x + elemSelected.getBoundingClientRect().width + document.getElementById("workingArea").scrollLeft);
+    }
+
+    if (svg.getAttribute("height") < elemSelected.getBoundingClientRect().y + elemSelected.getBoundingClientRect().height + document.getElementById("workingArea").scrollTop) {
+        console.log("resize");
+        svg.setAttribute("height", elemSelected.getBoundingClientRect().y + elemSelected.getBoundingClientRect().height + document.getElementById("workingArea").scrollLeft);
     }
 }
