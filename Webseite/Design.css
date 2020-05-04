@@ -39,3 +39,10 @@ svg {
 .draggable:hover {
     cursor: move;
 }
+
+.draggingPoint {
+    r: 3;
+    fill: white;
+    stroke: gray;
+    stroke-width: 1;
+}
