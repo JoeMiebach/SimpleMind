@@ -14,6 +14,8 @@ let xOffsetOther, yOffsetOther;
 //Cords of the Outside Elem
 let xOutside, yOutside;
 
+let snappingDistance = 100;
+
 function select(elem) {
 
     if(elemSelected == null) {
@@ -149,12 +151,16 @@ function findScreenCoords(mouseEvent) {
     
 
     if (elemSelected != null) {
-        elemSelected.setAttribute('cx', mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetCircle);
-        elemSelected.setAttribute('cy', mouse.y + document.getElementById("workingArea").scrollTop - yOffsetCircle);
+        elemSelected.setAttribute('cx', (Math.round((mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetCircle) / snappingDistance)) * snappingDistance);
+        elemSelected.setAttribute('cy', (Math.round((mouse.y + document.getElementById("workingArea").scrollTop - yOffsetCircle) / snappingDistance)) * snappingDistance);
+        console.log(((Math.round((mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetCircle) / snappingDistance)) * snappingDistance) + " " + (Math.round((mouse.y + document.getElementById("workingArea").scrollTop - yOffsetCircle) / snappingDistance)) * snappingDistance);
 
-        elemSelected.setAttribute('x', mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetOther);
-        elemSelected.setAttribute('y', mouse.y + document.getElementById("workingArea").scrollTop - yOffsetOther);
+        elemSelected.setAttribute('x', (Math.round((mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetOther) / snappingDistance)) * snappingDistance);
+        elemSelected.setAttribute('y', (Math.round((mouse.y + document.getElementById("workingArea").scrollTop - yOffsetOther) / snappingDistance)) * snappingDistance);
 
+
+        document.getElementById("selectionVisualisation").setAttribute("x", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
+        document.getElementById("selectionVisualisation").setAttribute("y", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
 
         // DRAG BOX
         document.getElementById("selectionVisualisation").setAttribute("x", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
