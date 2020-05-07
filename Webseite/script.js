@@ -15,10 +15,21 @@ let xOffsetOther, yOffsetOther;
 //Cords of the Outside Elem
 let xOutside, yOutside;
 
-let snappingDistance = 30;
 
 document.getElementById("ID_SVG").setAttribute("width", document.getElementById("workingArea").getBoundingClientRect().width - 5);
 document.getElementById("ID_SVG").setAttribute("height", document.getElementById("workingArea").getBoundingClientRect().height - 9);
+
+
+
+let snappingDistance = 10;
+
+document.getElementById("patternHorizontal").setAttribute("height", snappingDistance);
+document.getElementById("patternHorizontal").setAttribute("width", snappingDistance);
+document.getElementById("patternHorizontal").setAttribute("y2", snappingDistance);
+
+document.getElementById("patternVertical").setAttribute("height", snappingDistance);
+document.getElementById("patternVertical").setAttribute("width", snappingDistance);
+document.getElementById("patternVertical").setAttribute("y2", snappingDistance);
 
 
 let dragedElem = {
@@ -225,6 +236,9 @@ function select(elem) {
 function deselect(elem, event) {
     
     deselectResizing();
+
+    closeRightClickMenu();
+
     if (event.target !== elem) {
         console.log("Ja")
         
@@ -368,3 +382,22 @@ function resizeSVG() {
     }
 }
 
+
+// Right click Menu
+
+window.oncontextmenu = function () {
+    openRightClickMenu();
+    return false;     // cancel default menu
+}
+
+
+
+function openRightClickMenu() {
+    document.getElementById("rightClickMenu").style.display = "block";
+    document.getElementById("rightClickMenu").style.left = mouse.x + "px";
+    document.getElementById("rightClickMenu").style.top = mouse.y + "px";
+}
+
+function closeRightClickMenu() {
+    document.getElementById("rightClickMenu").style.display = "none";
+}
