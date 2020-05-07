@@ -13,6 +13,14 @@
     border-radius: 10px;
 }
 
+.faq-body::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+  }
+
+  .faq-body::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+  }}
+
 .bg{
     fill:none;
     stroke: grey;
@@ -69,4 +77,25 @@ svg {
 
 #dragTopLeft, #dragBottomRight {
     cursor: nw-resize;
+}
+
+
+
+
+
+
+#rightClickMenu {
+    position: fixed;
+    top: 30px;
+    left: 0px;
+    width: 300px;
+    height: 500px;
+    border:1 px solid black;
+    background:red;
+    display: none;
+}
+
+.rightClickOption {
+    width: 100%;
+    background: lightblue;
 }

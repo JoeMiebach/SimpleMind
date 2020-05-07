@@ -15,14 +15,22 @@ let xOffsetOther, yOffsetOther;
 //Cords of the Outside Elem
 let xOutside, yOutside;
 
-<<<<<<< HEAD
 let snappingDistance = 30;
-=======
-let snappingDistance = 1;
->>>>>>> parent of c2b8aaa... Resizeable
 
 document.getElementById("ID_SVG").setAttribute("width", document.getElementById("workingArea").getBoundingClientRect().width - 5);
 document.getElementById("ID_SVG").setAttribute("height", document.getElementById("workingArea").getBoundingClientRect().height - 9);
+
+
+let snappingDistance = 10;
+
+document.getElementById("patternHorizontal").setAttribute("height", snappingDistance);
+document.getElementById("patternHorizontal").setAttribute("width", snappingDistance);
+document.getElementById("patternHorizontal").setAttribute("y2", snappingDistance);
+
+document.getElementById("patternVertical").setAttribute("height", snappingDistance);
+document.getElementById("patternVertical").setAttribute("width", snappingDistance);
+document.getElementById("patternVertical").setAttribute("y2", snappingDistance);
+
 
 let dragedElem = {
   x: 0,
@@ -41,30 +49,6 @@ function multiSelection() {
 }
 
 function select(elem) {
-<<<<<<< HEAD
-  console.log(elem.getBoundingClientRect());
-
-  if (elemSelectedMoving == null) {
-    elemSelectedMoving = elem;
-    elemSelected = elem;
-    xOffsetCircle = mouse.x + document.getElementById("workingArea").scrollLeft - elemSelected.getAttribute("cx");
-    yOffsetCircle = mouse.y + document.getElementById("workingArea").scrollTop - elemSelected.getAttribute("cy");
-
-    xOffsetOther = mouse.x + document.getElementById("workingArea").scrollLeft - elemSelected.getAttribute("x");
-    yOffsetOther = mouse.y + document.getElementById("workingArea").scrollTop - elemSelected.getAttribute("y");
-
-    if (document.getElementById("selectionVisualisation") != null) {
-      // DELETE DRAGBOX
-      document.getElementById("selectionVisualisation").remove();
-      document.getElementById("dragTopLeft").remove();
-      document.getElementById("dragTopCenter").remove();
-      document.getElementById("dragTopRight").remove();
-      document.getElementById("dragCenterRight").remove();
-      document.getElementById("dragBottomRight").remove();
-      document.getElementById("dragBottomCenter").remove();
-      document.getElementById("dragBottomLeft").remove();
-      document.getElementById("dragCenterLeft").remove();
-=======
 
     
     if(elemSelectedMoving == null) {
@@ -245,7 +229,6 @@ function select(elem) {
             }
 
 
->>>>>>> parent of c2b8aaa... Resizeable
     }
     const selectionVisualisation = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 
@@ -398,29 +381,38 @@ function select(elem) {
 }
 
 function deselect(elem, event) {
-  deselectResizing();
-  if (event.target !== elem) {
-    console.log("Ja");
+    
+    deselectResizing();
 
-    elemSelectedMoving = null;
-  } else {
-    console.log("nein");
+    //closeRightClickMenu();
 
-    if (document.getElementById("selectionVisualisation") != null) {
-      // DELETE DRAGBOX
-      document.getElementById("selectionVisualisation").remove();
-      document.getElementById("dragTopLeft").remove();
-      document.getElementById("dragTopCenter").remove();
-      document.getElementById("dragTopRight").remove();
-      document.getElementById("dragCenterRight").remove();
-      document.getElementById("dragBottomRight").remove();
-      document.getElementById("dragBottomCenter").remove();
-      document.getElementById("dragBottomLeft").remove();
-      document.getElementById("dragCenterLeft").remove();
+    if (event.target !== elem) {
+        console.log("Ja")
+        
+
+        elemSelectedMoving = null;
+        
+
+    } else {
+        console.log("nein")
+
+        if(document.getElementById("selectionVisualisation") != null) {
+            // DELETE DRAGBOX
+            document.getElementById("selectionVisualisation").remove();
+            document.getElementById("dragTopLeft").remove();
+            document.getElementById("dragTopCenter").remove();
+            document.getElementById("dragTopRight").remove();
+            document.getElementById("dragCenterRight").remove();
+            document.getElementById("dragBottomRight").remove();
+            document.getElementById("dragBottomCenter").remove();
+            document.getElementById("dragBottomLeft").remove();
+            document.getElementById("dragCenterLeft").remove();
+        }
+
+        elemSelected = null;
     }
 
     elemSelected = null;
-  }
 }
 
 function deselectResizing() {
@@ -532,6 +524,25 @@ function resizeSVG() {
   }
 }
 
+
+// Right click Menu
+
+window.oncontextmenu = function () {
+    openRightClickMenu();
+    return false;     // cancel default menu
+}
+
+
+
+//function openRightClickMenu() {
+//    document.getElementById("rightClickMenu").style.display = "block";
+//    document.getElementById("rightClickMenu").style.left = mouse.x + "px";
+//    document.getElementById("rightClickMenu").style.top = mouse.y + "px";
+//}
+//
+//function closeRightClickMenu() {
+//    document.getElementById("rightClickMenu").style.display = "none";
+//}
 function snap(coord) {
-  return Math.round(coord / snappingDistance) * snappingDistance;
+    return Math.round(coord / snappingDistance) * snappingDistance;
 }
