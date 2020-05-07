@@ -225,7 +225,7 @@ function deselect(elem, event) {
     
     deselectResizing();
 
-    closeRightClickMenu();
+    //closeRightClickMenu();
 
     if (event.target !== elem) {
         console.log("Ja")
@@ -254,7 +254,6 @@ function deselect(elem, event) {
     }
 
     elemSelected = null;
-  }
 }
 
 function deselectResizing() {
@@ -376,15 +375,15 @@ window.oncontextmenu = function () {
 
 
 
-function openRightClickMenu() {
-    document.getElementById("rightClickMenu").style.display = "block";
-    document.getElementById("rightClickMenu").style.left = mouse.x + "px";
-    document.getElementById("rightClickMenu").style.top = mouse.y + "px";
-}
-
-function closeRightClickMenu() {
-    document.getElementById("rightClickMenu").style.display = "none";
-}
+//function openRightClickMenu() {
+//    document.getElementById("rightClickMenu").style.display = "block";
+//    document.getElementById("rightClickMenu").style.left = mouse.x + "px";
+//    document.getElementById("rightClickMenu").style.top = mouse.y + "px";
+//}
+//
+//function closeRightClickMenu() {
+//    document.getElementById("rightClickMenu").style.display = "none";
+//}
 function snap(coord) {
-  return Math.round(coord / snappingDistance) * snappingDistance;
+    return Math.round(coord / snappingDistance) * snappingDistance;
 }
