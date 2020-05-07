@@ -15,7 +15,7 @@ let xOffsetOther, yOffsetOther;
 //Cords of the Outside Elem
 let xOutside, yOutside;
 
-let snappingDistance = 10;
+let snappingDistance = 30;
 
 document.getElementById("ID_SVG").setAttribute("width", document.getElementById("workingArea").getBoundingClientRect().width - 5);
 document.getElementById("ID_SVG").setAttribute("height", document.getElementById("workingArea").getBoundingClientRect().height - 9);
