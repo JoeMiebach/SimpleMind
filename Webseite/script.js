@@ -17,6 +17,22 @@ let xOutside, yOutside;
 
 let snappingDistance = 30;
 
+document.getElementById("ID_SVG").setAttribute("width", document.getElementById("workingArea").getBoundingClientRect().width - 5);
+document.getElementById("ID_SVG").setAttribute("height", document.getElementById("workingArea").getBoundingClientRect().height - 9);
+
+
+let dragedElem = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0
+}
+
+let dragedCenterRight = false;
+let dragedBottomCenter = false;
+let dragedTopCenter = false;
+let dragedCenterLeft = false;
+
 
 function multiSelection() {
     console.log("multi");
@@ -73,16 +89,6 @@ function select(elem) {
             dragTopLeft.setAttribute("class", "draggingPoint");
             document.getElementById("ID_SVG").appendChild(dragTopLeft);
 
-
-            const dragTopCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            dragTopCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2);
-            dragTopCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
-            dragTopCenter.setAttribute("id", "dragTopCenter");
-            dragTopCenter.setAttribute("class", "draggingPoint");
-            document.getElementById("ID_SVG").appendChild(dragTopCenter);
-
-            
-
             const dragTopRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
             dragTopRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width);
             dragTopRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
@@ -90,28 +96,12 @@ function select(elem) {
             dragTopRight.setAttribute("class", "draggingPoint");
             document.getElementById("ID_SVG").appendChild(dragTopRight);
 
-
-
-            const dragCenterRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            dragCenterRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width);
-            dragCenterRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height / 2);
-            dragCenterRight.setAttribute("id", "dragCenterRight");
-            dragCenterRight.setAttribute("class", "draggingPoint");
-            document.getElementById("ID_SVG").appendChild(dragCenterRight);
-
             const dragBottomRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
             dragBottomRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width);
             dragBottomRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
             dragBottomRight.setAttribute("id", "dragBottomRight");
             dragBottomRight.setAttribute("class", "draggingPoint");
             document.getElementById("ID_SVG").appendChild(dragBottomRight);
-
-            const dragBottomCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            dragBottomCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2);
-            dragBottomCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
-            dragBottomCenter.setAttribute("id", "dragBottomCenter");
-            dragBottomCenter.setAttribute("class", "draggingPoint");
-            document.getElementById("ID_SVG").appendChild(dragBottomCenter);
 
             const dragBottomLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
             dragBottomLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft);
@@ -127,15 +117,114 @@ function select(elem) {
             dragCenterLeft.setAttribute("class", "draggingPoint");
             document.getElementById("ID_SVG").appendChild(dragCenterLeft);
         
+            const dragTopCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            dragTopCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2);
+            dragTopCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
+            dragTopCenter.setAttribute("id", "dragTopCenter");
+            dragTopCenter.setAttribute("class", "draggingPoint");
+            document.getElementById("ID_SVG").appendChild(dragTopCenter);
+
+            const dragBottomCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            dragBottomCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2);
+            dragBottomCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
+            dragBottomCenter.setAttribute("id", "dragBottomCenter");
+            dragBottomCenter.setAttribute("class", "draggingPoint");
+            document.getElementById("ID_SVG").appendChild(dragBottomCenter);
+
+            const dragCenterRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            dragCenterRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width);
+            dragCenterRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height / 2);
+            dragCenterRight.setAttribute("id", "dragCenterRight");
+            dragCenterRight.setAttribute("class", "draggingPoint");
+            document.getElementById("ID_SVG").appendChild(dragCenterRight);
+
+
+
+            
+            // Resize Elemt
+            document.getElementById("dragBottomRight").onmousedown = function() {
+                console.log("dragged");
+                dragedBottomCenter = true;
+                dragedCenterRight = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+
+            document.getElementById("dragTopRight").onmousedown = function() {
+                console.log("dragged");
+                dragedTopCenter = true;
+                dragedCenterRight = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+
+            document.getElementById("dragTopLeft").onmousedown = function() {
+                console.log("dragged");
+                dragedTopCenter = true;
+                dragedCenterLeft = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+
+            document.getElementById("dragBottomLeft").onmousedown = function() {
+                console.log("dragged");
+                dragedBottomCenter = true;
+                dragedCenterLeft = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+
+            document.getElementById("dragCenterRight").onmousedown = function() {
+                console.log("dragged");
+                dragedCenterRight = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+
+            document.getElementById("dragBottomCenter").onmousedown = function() {
+                console.log("dragged");
+                dragedBottomCenter = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+
+            document.getElementById("dragCenterLeft").onmousedown = function() {
+                console.log("dragged");
+                dragedCenterLeft = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
+                   
+            document.getElementById("dragTopCenter").onmousedown = function() {
+                console.log("dragged");
+                dragedTopCenter = true;
+                dragedElem.x = mouse.x;
+                dragedElem.y = mouse.y;
+                dragedElem.width = elemSelected.getBoundingClientRect().width;
+                dragedElem.height = elemSelected.getBoundingClientRect().height;
+            }
 
 
     }
 }
 
-
 function deselect(elem, event) {
     
-
+    deselectResizing();
     if (event.target !== elem) {
         console.log("Ja")
         
@@ -146,23 +235,40 @@ function deselect(elem, event) {
     } else {
         console.log("nein")
 
-        // DELETE DRAGBOX
-        document.getElementById("selectionVisualisation").remove();
-        document.getElementById("dragTopLeft").remove();
-        document.getElementById("dragTopCenter").remove();
-        document.getElementById("dragTopRight").remove();
-        document.getElementById("dragCenterRight").remove();
-        document.getElementById("dragBottomRight").remove();
-        document.getElementById("dragBottomCenter").remove();
-        document.getElementById("dragBottomLeft").remove();
-        document.getElementById("dragCenterLeft").remove();
+        if(document.getElementById("selectionVisualisation") != null) {
+            // DELETE DRAGBOX
+            document.getElementById("selectionVisualisation").remove();
+            document.getElementById("dragTopLeft").remove();
+            document.getElementById("dragTopCenter").remove();
+            document.getElementById("dragTopRight").remove();
+            document.getElementById("dragCenterRight").remove();
+            document.getElementById("dragBottomRight").remove();
+            document.getElementById("dragBottomCenter").remove();
+            document.getElementById("dragBottomLeft").remove();
+            document.getElementById("dragCenterLeft").remove();
+        }
 
         elemSelected = null;
     }
-
 }
 
+function deselectResizing() {
+    if(document.getElementById("dragCenterRight") != null) {
+        dragedCenterRight = false;
+    }
 
+    if(document.getElementById("dragBottomCenter") != null) {
+        dragedBottomCenter = false;
+    }
+
+    if(document.getElementById("dragTopCenter") != null) {
+        dragedTopCenter = false;
+    }
+
+    if(document.getElementById("dragCenterLeft") != null) {
+        dragedCenterLeft = false;
+    }
+}
 function findScreenCoords(mouseEvent) {
     
 
@@ -192,6 +298,9 @@ function findScreenCoords(mouseEvent) {
         document.getElementById("selectionVisualisation").setAttribute("x", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
         document.getElementById("selectionVisualisation").setAttribute("y", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
 
+        document.getElementById("selectionVisualisation").setAttribute("width", elemSelected.getBoundingClientRect().width)
+        document.getElementById("selectionVisualisation").setAttribute("height", elemSelected.getBoundingClientRect().height);
+
         // DRAG BOX
         document.getElementById("selectionVisualisation").setAttribute("x", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
         document.getElementById("selectionVisualisation").setAttribute("y", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
@@ -199,32 +308,54 @@ function findScreenCoords(mouseEvent) {
         document.getElementById("dragTopLeft").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
         document.getElementById("dragTopLeft").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
         
-        document.getElementById("dragTopCenter").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2)
-        document.getElementById("dragTopCenter").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
-
         document.getElementById("dragTopRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width)
         document.getElementById("dragTopRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
 
-        document.getElementById("dragCenterRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width)
-        document.getElementById("dragCenterRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height / 2);
-       
         document.getElementById("dragBottomRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width)
         document.getElementById("dragBottomRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
-
-        document.getElementById("dragBottomCenter").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2)
-        document.getElementById("dragBottomCenter").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
 
         document.getElementById("dragBottomLeft").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
         document.getElementById("dragBottomLeft").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
 
         document.getElementById("dragCenterLeft").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft)
         document.getElementById("dragCenterLeft").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height / 2);
+
+        document.getElementById("dragBottomCenter").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2)
+        document.getElementById("dragBottomCenter").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height);
+
+        document.getElementById("dragCenterRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width)
+        document.getElementById("dragCenterRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + elemSelected.getBoundingClientRect().height / 2);
+       
+        document.getElementById("dragTopCenter").setAttribute("cx", elemSelected.getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + elemSelected.getBoundingClientRect().width / 2)
+        document.getElementById("dragTopCenter").setAttribute("cy", elemSelected.getBoundingClientRect().y + document.getElementById("workingArea").scrollTop);
     }
 
+
+    //Resizing
+
+
+    
+    if(dragedCenterRight) {
+        elemSelected.setAttribute("width", dragedElem.width + mouse.x - dragedElem.x)
+    }
+
+    if(dragedBottomCenter) {
+        elemSelected.setAttribute("height", dragedElem.height + mouse.y - dragedElem.y)
+    }
+
+    if(dragedTopCenter) {
+        elemSelected.setAttribute("height", dragedElem.y - mouse.y + dragedElem.height)
+        elemSelected.setAttribute("y", mouse.y);
+    }
+
+    if(dragedCenterLeft) {
+        elemSelected.setAttribute("width", dragedElem.x - mouse.x + dragedElem.width)
+        elemSelected.setAttribute("x", mouse.x);
+    }
 }
 
 document.getElementById("workingArea").onmousemove = findScreenCoords;
-
+ 
 function resizeSVG() {
     var svg = document.getElementById("ID_SVG");
 
