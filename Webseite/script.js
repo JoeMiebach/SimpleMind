@@ -15,7 +15,7 @@ let xOffsetOther, yOffsetOther;
 //Cords of the Outside Elem
 let xOutside, yOutside;
 
-let snappingDistance = 1;
+let snappingDistance = 30;
 
 
 function multiSelection() {
@@ -236,3 +236,4 @@ function resizeSVG() {
         svg.setAttribute("height", elemSelected.getBoundingClientRect().y + elemSelected.getBoundingClientRect().height + document.getElementById("workingArea").scrollLeft);
     }
 }
+
