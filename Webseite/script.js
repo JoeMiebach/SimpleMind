@@ -217,17 +217,15 @@ function deselect(elem, event) {
     
     deselectResizing();
 
-    //closeRightClickMenu();
+    closeRightClickMenu();
 
     if (event.target !== elem) {
-        console.log("Ja")
         
 
         elemSelectedMoving = null;
 
 
     } else {
-        console.log("nein")
 
         if(document.getElementById("selectionVisualisation") != null) {
             // DELETE DRAGBOX
@@ -374,15 +372,15 @@ window.oncontextmenu = function () {
 
 
 
-//function openRightClickMenu() {
-//    document.getElementById("rightClickMenu").style.display = "block";
-//    document.getElementById("rightClickMenu").style.left = mouse.x + "px";
-//    document.getElementById("rightClickMenu").style.top = mouse.y + "px";
-//}
-//
-//function closeRightClickMenu() {
-//    document.getElementById("rightClickMenu").style.display = "none";
-//}
+function openRightClickMenu() {
+    document.getElementById("rightClickMenu").style.display = "block";
+    document.getElementById("rightClickMenu").style.left = mouse.x + "px";
+    document.getElementById("rightClickMenu").style.top = mouse.y + "px";
+}
+
+function closeRightClickMenu() {
+    document.getElementById("rightClickMenu").style.display = "none";
+}
 
 function snap(coord) {
     return Math.round(coord / snappingDistance) * snappingDistance;
