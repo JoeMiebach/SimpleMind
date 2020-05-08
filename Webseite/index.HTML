@@ -1,94 +1,72 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="Design.css" media="screen" />
-</head>
-<body>
-    
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
     <div id="workingArea">
-
-        <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
-
-            <g style="pointer-events: none;">
-                <defs>
-                    <pattern id="patternHorizontal" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(90)">
-                        <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
-                    </pattern>
-                    <pattern id="patternVertical" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(0)">
-                        <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
-                    </pattern>
-                </defs>
-
-
-                <rect width="100%" height="100%" fill="url(#patternHorizontal)" :opacity="1" />
-                <rect width="100%" height="100%" fill="url(#patternVertical)" :opacity="1" />
-            </g>
-
-            <svg  onmousedown="select(this)" height="140" width="500" viewbox="0, 0, 512, 630">
-                <path xmlns="http://www.w3.org/2000/svg" d="M255,76C114.39,76,0,156.742,0,256s114.39,180,255,180s257-80.742,257-180S395.61,76,255,76z"/>
-            </svg>
-
-
-
-
-
-            <circle class="draggable" onmousedown="select(this)" cx="200" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-            <rect class="draggable" onmousedown="select(this)" x="200" y="50" width="200" height="100" stroke="red" stroke-width="1" fill="yellow" />
-
-
-
-
-
-            <svg preserveAspectRatio="none" stroke-width="10px" fill="blue" onmousedown="select(this)" width="380" height="170" viewbox="0, 0, 190, 198">
-                <polygon points="100,0 40,198 190,78 0,78 160,198" style="stroke:purple;fill-rule:nonzero;"/>
-            </svg>
-
-            <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 20, 10">
-                <polygon fill="green" points="0,10 20,10 10,0"></polygon>
-            </svg>
-
-
-            <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
-                <polygon fill="green" points="0,10 10,10 10,0 5,5 4,4"></polygon>
-            </svg>
-
-            <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
-                <polygon fill="green" points="5,0 10,5 5,10 0,5"></polygon>
-            </svg>
-
-            <rect onmousedown="select(this)" x="50" y="20" rx="20" ry="20" width="150" height="150" style="fill:red;stroke:black;stroke-width:5;opacity:0.5" />
-            <rect onmousedown="select(this)" x="50" y="20" rx="9999999999999999999999999999" ry="9999999999999999999999999999" width="150" height="150" style="fill:red;stroke:black;stroke-width:5;opacity:0.5" />
-
-
-            <svg preserveAspectRatio="none" stroke-location="inside" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 190, 198">
-                <polygon fill="red" points="100,10 40,198 190,78 10,78 160,198"/>
-            </svg>
-
-
-
+      <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
+        <svg onmousedown="select(this)" height="140" width="500" viewbox="0, 0, 512, 630">
+          <path xmlns="http://www.w3.org/2000/svg" d="M255,76C114.39,76,0,156.742,0,256s114.39,180,255,180s257-80.742,257-180S395.61,76,255,76z" />
         </svg>
 
+        <g id="background" style="pointer-events: none;">
+          <defs>
+            <pattern id="patternHorizontal" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(90)">
+              <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+            </pattern>
+            <pattern id="patternVertical" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(0)">
+              <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+            </pattern>
+          </defs>
 
-        <div id="rightClickMenu">
-            <div class="rightClickOption" onmousedown="rightClickMenuCopy()">Kopieren</div>
-            <div class="rightClickOption" onmousedown="rightClickMenuPaste()">Einfügen</div>
-            <div class="rightClickOption" onmousedown="rightClickMenuCut()">Ausschneiden</div>
-            <div class="rightClickOption" onmousedown="rightClickMenuDelete()">Löschen</div>
-        </div>
-        
-        
+          <rect width="100%" height="100%" fill="url(#patternHorizontal)" :opacity="1" />
+          <rect width="100%" height="100%" fill="url(#patternVertical)" :opacity="1" />
+        </g>
+
+        <circle class="draggable" onmousedown="select(this)" cx="200" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
+        <rect class="draggable" onmousedown="select(this)" x="200" y="50" width="200" height="100" stroke="red" stroke-width="1" fill="yellow" />
+
+        <svg preserveAspectRatio="none" stroke-width="10px" fill="blue" onmousedown="select(this)" width="380" height="170" viewbox="0, 0, 190, 198">
+          <polygon points="100,0 40,198 190,78 0,78 160,198" style="stroke: purple; fill-rule: nonzero;" />
+        </svg>
+
+        <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 20, 10">
+          <polygon fill="green" points="0,10 20,10 10,0"></polygon>
+        </svg>
+
+        <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
+          <polygon fill="green" points="0,10 10,10 10,0 5,5 4,4"></polygon>
+        </svg>
+
+        <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
+          <polygon fill="green" points="5,0 10,5 5,10 0,5"></polygon>
+        </svg>
+
+        <rect onmousedown="select(this)" x="50" y="20" rx="20" ry="20" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
+        <rect onmousedown="select(this)" x="50" y="20" rx="9999999999999999999999999999" ry="9999999999999999999999999999" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
+
+        <svg preserveAspectRatio="none" stroke-location="inside" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 190, 198">
+          <polygon fill="red" points="100,10 40,198 190,78 10,78 160,198" />
+        </svg>
+      </svg>
+
+      <div id="rightClickMenu">
+        <div class="rightClickOption" onmousedown="rightClickMenuCopy()">Kopieren</div>
+        <div class="rightClickOption" onmousedown="rightClickMenuPaste()">Einfügen</div>
+        <div class="rightClickOption" onmousedown="rightClickMenuCut()">Ausschneiden</div>
+        <div class="rightClickOption" onmousedown="rightClickMenuDelete()">Löschen</div>
+      </div>
     </div>
 
-   
-
-    <div id="sidebar"></div>
-
-    
-
+    <div id="sidebar">
+      <button id="BTNExportToPng">export as PNG</button>
+      <button id="BTNExportToJpg">export as JPG</button>
+    </div>
 
     <script src="script.js"></script>
- 
-</body>
+    <script src="export.js"></script>
+  </body>
 </html>

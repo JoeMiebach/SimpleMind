@@ -211,6 +211,8 @@ function select(elem) {
 
 
     }
+
+    return elem;
 }
 
 function deselect(elem, event) {
@@ -390,8 +392,10 @@ function rightClickMenuDelete() {
     elemSelected.remove();
     deselect();
 }
-let clipboard;
 
+
+
+let clipboard;
 function rightClickMenuCopy() {
     clipboard = elemSelected.cloneNode(true);
     console.log(clipboard);
@@ -413,5 +417,20 @@ function rightClickMenuPaste() {
 }
 
 
+function rightClickMenuSetBack() {
+    document.getElementById("background").after(elemSelected);
+}
 
+function rightClickMenuSetFront() {
+    document.getElementById("selectionVisualisation").before(elemSelected);
+}
 
+function rightClickMenuOneBack() {
+    if(elemSelected.nextElementSibling != null && elemSelected.nextElementSibling != document.getElementById("background"))
+    elemSelected.previousElementSibling.before(elemSelected);
+}
+
+function rightClickMenuOneFront() {
+    if(elemSelected.nextElementSibling != null && elemSelected.nextElementSibling != document.getElementById("selectionVisualisation"))
+    elemSelected.nextElementSibling.after(elemSelected);
+}

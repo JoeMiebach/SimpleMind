@@ -28,12 +28,13 @@
     stroke-width:1;
 }
 
+#canvas{
+    display: none;
+}
 
 svg {
     position: relative;
 }
-
-
 #workingArea {
     position: absolute;
     width: calc(100% - 100px);
