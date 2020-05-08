@@ -11,7 +11,7 @@
 
         <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
 
-            <g style="pointer-events: none;">
+            <g id="background" style="pointer-events: none;">
                 <defs>
                     <pattern id="patternHorizontal" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(90)">
                         <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
@@ -72,10 +72,14 @@
 
 
         <div id="rightClickMenu">
-            <div class="rightClickOption" onmousedown="rightClickMenuCopy()">Kopieren</div>
-            <div class="rightClickOption" onmousedown="rightClickMenuPaste()">Einfügen</div>
-            <div class="rightClickOption" onmousedown="rightClickMenuCut()">Ausschneiden</div>
-            <div class="rightClickOption" onmousedown="rightClickMenuDelete()">Löschen</div>
+            <div class="rightClickOption" onclick="rightClickMenuCopy()">Kopieren</div>
+            <div class="rightClickOption" onclick="rightClickMenuPaste()">Einfügen</div>
+            <div class="rightClickOption" onclick="rightClickMenuCut()">Ausschneiden</div>
+            <div class="rightClickOption" onclick="rightClickMenuDelete()">Löschen</div>
+            <div class="rightClickOption" onclick="rightClickMenuOneBack()">Eine Ebene nach Hinten</div>
+            <div class="rightClickOption" onclick="rightClickMenuOneFront()">Eine Ebene nach Vorne</div>
+            <div class="rightClickOption" onclick="rightClickMenuSetBack()">Ganz nach hinten</div>
+            <div class="rightClickOption" onclick="rightClickMenuSetFront()">Ganz nach vorne</div>
         </div>
         
         

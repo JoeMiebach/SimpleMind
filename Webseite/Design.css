@@ -18,9 +18,9 @@
     background: transparent;
   }
 
-  .faq-body::-webkit-scrollbar-track-piece:end {
+.faq-body::-webkit-scrollbar-track-piece:end {
     background: transparent;
-  }}
+}
 
 .bg{
     fill:none;
