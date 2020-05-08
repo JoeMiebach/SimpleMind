@@ -20,7 +20,7 @@ document.getElementById("ID_SVG").setAttribute("width", document.getElementById(
 document.getElementById("ID_SVG").setAttribute("height", document.getElementById("workingArea").getBoundingClientRect().height - 9);
 
 
-let snappingDistance = 10;
+let snappingDistance = 30;
 
 document.getElementById("patternHorizontal").setAttribute("height", snappingDistance);
 document.getElementById("patternHorizontal").setAttribute("width", snappingDistance);
@@ -371,6 +371,10 @@ window.oncontextmenu = function () {
 }
 
 
+function snap(coord) {
+    return Math.round(coord / snappingDistance) * snappingDistance;
+}
+
 
 function openRightClickMenu() {
     document.getElementById("rightClickMenu").style.display = "block";
@@ -382,6 +386,32 @@ function closeRightClickMenu() {
     document.getElementById("rightClickMenu").style.display = "none";
 }
 
-function snap(coord) {
-    return Math.round(coord / snappingDistance) * snappingDistance;
+function rightClickMenuDelete() {
+    elemSelected.remove();
+    deselect();
 }
+let clipboard;
+
+function rightClickMenuCopy() {
+    clipboard = elemSelected.cloneNode(true);
+    console.log(clipboard);
+}
+
+function rightClickMenuCut() {
+    clipboard = elemSelected.cloneNode(true);
+    elemSelected.remove();
+    deselect();
+
+    document.getElementById("ID_SVG").appendChild(clipboard);
+}
+
+function rightClickMenuPaste() {
+    console.log(clipboard);
+    
+    clipboard = clipboard.cloneNode(true);
+    document.getElementById("ID_SVG").appendChild(clipboard);
+}
+
+
+
+
