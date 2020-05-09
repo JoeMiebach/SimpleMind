@@ -24,8 +24,8 @@ btnPng.addEventListener("click", function () {
   console.log("arr");
 
   var canvas = document.getElementById("canvas");
-  canvas.setAttribute("width", window.innerWidth - document.getElementById("sidebar").offsetWidth);
-  canvas.setAttribute("height", window.innerHeight);
+  canvas.setAttribute("width", svg.getAttribute("width"));
+  canvas.setAttribute("height", svg.getAttribute("height"));
   var ctx = canvas.getContext("2d");
   var data = new XMLSerializer().serializeToString(svg);
   var DOMURL = window.URL || window.webkitURL || window;
@@ -70,8 +70,8 @@ btnJpg.addEventListener("click", function () {
   console.log("arr");
 
   var canvas = document.getElementById("canvas");
-  canvas.setAttribute("width", window.innerWidth - document.getElementById("sidebar").offsetWidth);
-  canvas.setAttribute("height", window.innerHeight);
+  canvas.setAttribute("width", svg.getAttribute("width"));
+  canvas.setAttribute("height", svg.getAttribute("height"));
   var ctx = canvas.getContext("2d");
   var data = new XMLSerializer().serializeToString(svg);
   var DOMURL = window.URL || window.webkitURL || window;

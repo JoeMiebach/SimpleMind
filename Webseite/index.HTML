@@ -8,9 +8,6 @@
     <canvas id="canvas"></canvas>
     <div id="workingArea">
       <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
-        <svg onmousedown="select(this)" height="140" width="500" viewbox="0, 0, 512, 630">
-          <path xmlns="http://www.w3.org/2000/svg" d="M255,76C114.39,76,0,156.742,0,256s114.39,180,255,180s257-80.742,257-180S395.61,76,255,76z" />
-        </svg>
 
         <g id="background" style="pointer-events: none;">
           <defs>
@@ -37,8 +34,8 @@
           <polygon fill="green" points="0,10 20,10 10,0"></polygon>
         </svg>
 
-        <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
-          <polygon fill="green" points="0,10 10,10 10,0 5,5 4,4"></polygon>
+        <svg  preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
+          <polygon transform="scale(-1,1) translate(-10,0)" fill="green" points="0,10 10,10 10,0 5,5 4,4"></polygon>
         </svg>
 
         <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
