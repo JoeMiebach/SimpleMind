@@ -3,7 +3,7 @@ let mouse = {
   y: 0,
 };
 
-let elemSelected = null;
+let elemSelected = [];
 let elemSelectedMoving = null;
 let xoffsetCircle, yoffsetCircle;
 let xoffsetOther, yoffsetOther;
@@ -378,6 +378,52 @@ function openRightClickMenu() {
   document.getElementById("rightClickMenu").style.display = "block";
   document.getElementById("rightClickMenu").style.left = mouse.x + "px";
   document.getElementById("rightClickMenu").style.top = mouse.y + "px";
+
+  elemSelectedMoving = null;
+
+  if (elemSelected == null) {
+    document.getElementById("rightClickMenuCopy").style.opacity = "0.5";
+    document.getElementById("rightClickMenuCopy").style.pointerEvents = "none";
+
+    document.getElementById("rightClickMenuCut").style.opacity = "0.5";
+    document.getElementById("rightClickMenuCut").style.pointerEvents = "none";
+
+    document.getElementById("rightClickMenuDelete").style.opacity = "0.5";
+    document.getElementById("rightClickMenuDelete").style.pointerEvents = "none";
+
+    document.getElementById("rightClickMenuSetBack").style.opacity = "0.5";
+    document.getElementById("rightClickMenuSetBack").style.pointerEvents = "none";
+
+    document.getElementById("rightClickMenuSetFront").style.opacity = "0.5";
+    document.getElementById("rightClickMenuSetFront").style.pointerEvents = "none";
+
+    document.getElementById("rightClickMenuOneFront").style.opacity = "0.5";
+    document.getElementById("rightClickMenuOneFront").style.pointerEvents = "none";
+
+    document.getElementById("rightClickMenuOneBack").style.opacity = "0.5";
+    document.getElementById("rightClickMenuOneBack").style.pointerEvents = "none";
+  } else {
+    document.getElementById("rightClickMenuCopy").style.opacity = "1";
+    document.getElementById("rightClickMenuCopy").style.pointerEvents = "all";
+
+    document.getElementById("rightClickMenuCut").style.opacity = "1";
+    document.getElementById("rightClickMenuCut").style.pointerEvents = "all";
+
+    document.getElementById("rightClickMenuDelete").style.opacity = "1";
+    document.getElementById("rightClickMenuDelete").style.pointerEvents = "all";
+
+    document.getElementById("rightClickMenuSetBack").style.opacity = "1";
+    document.getElementById("rightClickMenuSetBack").style.pointerEvents = "all";
+
+    document.getElementById("rightClickMenuSetFront").style.opacity = "1";
+    document.getElementById("rightClickMenuSetFront").style.pointerEvents = "all";
+
+    document.getElementById("rightClickMenuOneFront").style.opacity = "1";
+    document.getElementById("rightClickMenuOneFront").style.pointerEvents = "all";
+
+    document.getElementById("rightClickMenuOneBack").style.opacity = "1";
+    document.getElementById("rightClickMenuOneBack").style.pointerEvents = "all";
+  }
 }
 
 function closeRightClickMenu() {
@@ -385,29 +431,35 @@ function closeRightClickMenu() {
 }
 
 function rightClickMenuDelete() {
-  elemSelected.remove();
-  deselect();
+  if (elemSelected != null) {
+    elemSelected.remove();
+    deselect();
+  }
 }
 
 let clipboard;
 function rightClickMenuCopy() {
-  clipboard = elemSelected.cloneNode(true);
-  console.log(clipboard);
+  if (elemSelected != null) {
+    clipboard = elemSelected.cloneNode(true);
+    console.log(clipboard);
+  }
 }
 
 function rightClickMenuCut() {
-  clipboard = elemSelected.cloneNode(true);
-  elemSelected.remove();
-  deselect();
+  if (elemSelected != null) {
+    clipboard = elemSelected.cloneNode(true);
+    elemSelected.remove();
+    deselect();
 
-  document.getElementById("ID_SVG").appendChild(clipboard);
+    document.getElementById("ID_SVG").appendChild(clipboard);
+  }
 }
 
 function rightClickMenuPaste() {
-  console.log(clipboard);
-
-  clipboard = clipboard.cloneNode(true);
-  document.getElementById("ID_SVG").appendChild(clipboard);
+  if (clipboard != null) {
+    clipboard = clipboard.cloneNode(true);
+    document.getElementById("ID_SVG").appendChild(clipboard);
+  }
 }
 
 function rightClickMenuSetBack() {
@@ -419,7 +471,7 @@ function rightClickMenuSetFront() {
 }
 
 function rightClickMenuOneBack() {
-  if (elemSelected.nextElementSibling != null && elemSelected.nextElementSibling != document.getElementById("background")) elemSelected.previousElementSibling.before(elemSelected);
+  if (elemSelected.previousElementSibling != null && elemSelected.previousElementSibling != document.getElementById("background")) elemSelected.previousElementSibling.before(elemSelected);
 }
 
 function rightClickMenuOneFront() {
@@ -437,8 +489,27 @@ document.body.addEventListener(
     let meta = e.metaKey ? e.metaKey : false; // meta detection
 
     ctrl = ctrl || meta ? true : false;
+
+    // functions
+
     if (key == 86 && ctrl) {
-      console.log("Ctrl + V Pressed !");
+      // Paste
+      rightClickMenuPaste();
+    }
+
+    if (key == 67 && ctrl) {
+      // Copy
+      rightClickMenuCopy();
+    }
+
+    if (key == 88 && ctrl) {
+      // Copy
+      rightClickMenuCut();
+    }
+
+    if (key == 46 || key == 8) {
+      // Delete
+      rightClickMenuDelete();
     }
 
     if (key == 90 && ctrl && shift) {
@@ -455,6 +526,29 @@ document.body.addEventListener(
         console.log(historyPos);
       }
     }
+
+    if (key == 27) {
+      // Escape
+      console.log("escape");
+      if (document.getElementById("selectionVisualisation") != null) {
+        // DELETE DRAGBOX
+        document.getElementById("selectionVisualisation").remove();
+        document.getElementById("dragTopLeft").remove();
+        document.getElementById("dragTopCenter").remove();
+        document.getElementById("dragTopRight").remove();
+        document.getElementById("dragCenterRight").remove();
+        document.getElementById("dragBottomRight").remove();
+        document.getElementById("dragBottomCenter").remove();
+        document.getElementById("dragBottomLeft").remove();
+        document.getElementById("dragCenterLeft").remove();
+      }
+      elemSelectedMoving = null;
+      elemSelected = null;
+
+      closeRightClickMenu();
+    }
+
+    console.log(e);
   },
   false
 );

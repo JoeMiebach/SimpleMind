@@ -7,6 +7,7 @@
   <body>
     <canvas id="canvas"></canvas>
     <div id="workingArea">
+
       <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
 
         <g id="background" style="pointer-events: none;">
@@ -22,6 +23,11 @@
           <rect width="100%" height="100%" fill="url(#patternHorizontal)" :opacity="1" />
           <rect width="100%" height="100%" fill="url(#patternVertical)" :opacity="1" />
         </g>
+
+        <svg onmousedown="select(this)" height="140" width="500" fill="lightgreen" viewbox="0, 0, 512, 630">
+          <path xmlns="http://www.w3.org/2000/svg" d="M255,76C114.39,76,0,156.742,0,256s114.39,180,255,180s257-80.742,257-180S395.61,76,255,76z" />
+        </svg>
+
 
         <circle class="draggable" onmousedown="select(this)" cx="200" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
         <rect class="draggable" onmousedown="select(this)" x="200" y="50" width="200" height="100" stroke="red" stroke-width="1" fill="yellow" />
@@ -46,14 +52,14 @@
         <rect onmousedown="select(this)" x="50" y="20" rx="9999999999999999999999999999" ry="9999999999999999999999999999" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
 
         <div id="rightClickMenu">
-            <div class="rightClickOption" onclick="rightClickMenuCopy()">Kopieren</div>
-            <div class="rightClickOption" onclick="rightClickMenuPaste()">Einfügen</div>
-            <div class="rightClickOption" onclick="rightClickMenuCut()">Ausschneiden</div>
-            <div class="rightClickOption" onclick="rightClickMenuDelete()">Löschen</div>
-            <div class="rightClickOption" onclick="rightClickMenuOneBack()">Eine Ebene nach Hinten</div>
-            <div class="rightClickOption" onclick="rightClickMenuOneFront()">Eine Ebene nach Vorne</div>
-            <div class="rightClickOption" onclick="rightClickMenuSetBack()">Ganz nach hinten</div>
-            <div class="rightClickOption" onclick="rightClickMenuSetFront()">Ganz nach vorne</div>
+            <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()">Kopieren</div>
+            <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()">Einfügen</div>
+            <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()">Ausschneiden</div>
+            <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()">Löschen</div>
+            <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()">Eine Ebene nach Hinten</div>
+            <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()">Eine Ebene nach Vorne</div>
+            <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()">Ganz nach hinten</div>
+            <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()">Ganz nach vorne</div>
         </div>
         
         
