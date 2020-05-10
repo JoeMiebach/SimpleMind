@@ -3,7 +3,7 @@ let mouse = {
   y: 0,
 };
 
-let elemSelected = [];
+let elemSelected;
 let elemSelectedMoving = null;
 let xoffsetCircle, yoffsetCircle;
 let xoffsetOther, yoffsetOther;
@@ -42,13 +42,8 @@ let dragedBottomCenter = false;
 let dragedTopCenter = false;
 let dragedCenterLeft = false;
 
-function multiSelection() {
-  console.log("multi");
-}
 
 function select(elem) {
-  console.log(elem.getBoundingClientRect());
-
   if (elemSelectedMoving == null) {
     elemSelectedMoving = elem;
     elemSelected = elem;
@@ -137,7 +132,6 @@ function select(elem) {
 
     // Resize Elemt
     document.getElementById("dragBottomRight").onmousedown = function () {
-      console.log("dragged");
       dragedBottomCenter = true;
       dragedCenterRight = true;
       dragedElem.x = mouse.x;
@@ -146,7 +140,6 @@ function select(elem) {
       dragedElem.height = elemSelected.getBoundingClientRect().height;
     };
     document.getElementById("dragTopRight").onmousedown = function () {
-      console.log("dragged");
       dragedTopCenter = true;
       dragedCenterRight = true;
       dragedElem.x = mouse.x;
@@ -155,7 +148,6 @@ function select(elem) {
       dragedElem.height = elemSelected.getBoundingClientRect().height;
     };
     document.getElementById("dragTopLeft").onmousedown = function () {
-      console.log("dragged");
       dragedTopCenter = true;
       dragedCenterLeft = true;
       dragedElem.x = mouse.x;
@@ -164,7 +156,6 @@ function select(elem) {
       dragedElem.height = elemSelected.getBoundingClientRect().height;
     };
     document.getElementById("dragBottomLeft").onmousedown = function () {
-      console.log("dragged");
       dragedBottomCenter = true;
       dragedCenterLeft = true;
       dragedElem.x = mouse.x;
@@ -173,7 +164,6 @@ function select(elem) {
       dragedElem.height = elemSelected.getBoundingClientRect().height;
     };
     document.getElementById("dragCenterRight").onmousedown = function () {
-      console.log("dragged");
       dragedCenterRight = true;
       dragedElem.x = mouse.x;
       dragedElem.y = mouse.y;
@@ -181,7 +171,6 @@ function select(elem) {
       dragedElem.height = elemSelected.getBoundingClientRect().height;
     };
     document.getElementById("dragBottomCenter").onmousedown = function () {
-      console.log("dragged");
       dragedBottomCenter = true;
       dragedElem.x = mouse.x;
       dragedElem.y = mouse.y;
@@ -189,7 +178,6 @@ function select(elem) {
       dragedElem.height = elemSelected.getBoundingClientRect().height;
     };
     document.getElementById("dragCenterLeft").onmousedown = function () {
-      console.log("dragged");
       dragedCenterLeft = true;
       dragedElem.x = mouse.x;
       dragedElem.y = mouse.y;
@@ -198,7 +186,6 @@ function select(elem) {
     };
 
     document.getElementById("dragTopCenter").onmousedown = function () {
-      console.log("dragged");
       dragedTopCenter = true;
       dragedElem.x = mouse.x;
       dragedElem.y = mouse.y;
@@ -221,9 +208,6 @@ function deselect(elem, event) {
     history.push(document.getElementById("ID_SVG").cloneNode(true));
     historyPos = history.length;
   }
-  console.log("gespeichert");
-  console.log(historyPos);
-  console.log(history);
 
   if (event.target !== elem) {
     elemSelectedMoving = null;
@@ -346,7 +330,6 @@ function resizeSVG() {
   let xOutside = 0,
     yOutside = 0;
 
-  console.log("testttt");
   for (let i = 1; i < svgChildren.length; i++) {
     xOutside =
       svgChildren[i].getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + svgChildren[i].getBoundingClientRect().width > xOutside
@@ -441,7 +424,6 @@ let clipboard;
 function rightClickMenuCopy() {
   if (elemSelected != null) {
     clipboard = elemSelected.cloneNode(true);
-    console.log(clipboard);
   }
 }
 
@@ -523,26 +505,12 @@ document.body.addEventListener(
         document.getElementById("ID_SVG").remove();
         document.getElementById("workingArea").prepend(history[historyPos - 2]);
         historyPos--;
-        console.log(historyPos);
       }
     }
 
     if (key == 27) {
       // Escape
-      if (document.getElementById("selectionVisualisation") != null) {
-        // DELETE DRAGBOX
-        document.getElementById("selectionVisualisation").remove();
-        document.getElementById("dragTopLeft").remove();
-        document.getElementById("dragTopCenter").remove();
-        document.getElementById("dragTopRight").remove();
-        document.getElementById("dragCenterRight").remove();
-        document.getElementById("dragBottomRight").remove();
-        document.getElementById("dragBottomCenter").remove();
-        document.getElementById("dragBottomLeft").remove();
-        document.getElementById("dragCenterLeft").remove();
-      }
-      elemSelectedMoving = null;
-      elemSelected = null;
+      deselectSelection();
 
       closeRightClickMenu();
     }
@@ -550,3 +518,20 @@ document.body.addEventListener(
   },
   false
 );
+
+function deselectSelection() {
+  if (document.getElementById("selectionVisualisation") != null) {
+    // DELETE DRAGBOX
+    document.getElementById("selectionVisualisation").remove();
+    document.getElementById("dragTopLeft").remove();
+    document.getElementById("dragTopCenter").remove();
+    document.getElementById("dragTopRight").remove();
+    document.getElementById("dragCenterRight").remove();
+    document.getElementById("dragBottomRight").remove();
+    document.getElementById("dragBottomCenter").remove();
+    document.getElementById("dragBottomLeft").remove();
+    document.getElementById("dragCenterLeft").remove();
+  }
+  elemSelectedMoving = null;
+  elemSelected = null;
+}
