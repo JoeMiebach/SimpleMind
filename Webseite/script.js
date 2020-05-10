@@ -279,7 +279,6 @@ function findScreenCoords(mouseEvent) {
 
     elemSelectedMoving.setAttribute("x", snap(mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetOther));
     elemSelectedMoving.setAttribute("y", snap(mouse.y + document.getElementById("workingArea").scrollTop - yOffsetOther));
-    resizeSVG();
   }
 
   if (elemSelected != null) {
@@ -337,6 +336,7 @@ function findScreenCoords(mouseEvent) {
   if (dragedBottomCenter) {
     elemSelected.setAttribute("height", snap(dragedElem.height + mouse.y - dragedElem.y));
   }
+  resizeSVG();
 }
 
 document.getElementById("workingArea").onmousemove = findScreenCoords;
@@ -356,9 +356,9 @@ function resizeSVG() {
       svgChildren[i].getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + svgChildren[i].getBoundingClientRect().height > yOutside
         ? svgChildren[i].getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + svgChildren[i].getBoundingClientRect().height
         : yOutside;
-  }
-  console.log(xOutside);
-  console.log(yOutside);
+  } 
+  xOutside = xOutside > document.getElementById("workingArea").getBoundingClientRect().width ? xOutside : document.getElementById("workingArea").getBoundingClientRect().width;
+  yOutside = yOutside > document.getElementById("workingArea").getBoundingClientRect().height ? yOutside : document.getElementById("workingArea").getBoundingClientRect().height;
   document.getElementById("ID_SVG").setAttribute("width", xOutside);
   document.getElementById("ID_SVG").setAttribute("height", yOutside);
 }
@@ -529,7 +529,6 @@ document.body.addEventListener(
 
     if (key == 27) {
       // Escape
-      console.log("escape");
       if (document.getElementById("selectionVisualisation") != null) {
         // DELETE DRAGBOX
         document.getElementById("selectionVisualisation").remove();
@@ -548,7 +547,6 @@ document.body.addEventListener(
       closeRightClickMenu();
     }
 
-    console.log(e);
   },
   false
 );
