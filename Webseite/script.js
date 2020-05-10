@@ -12,10 +12,10 @@ let xoffsetOther, yoffsetOther;
 let xOffsetCircle, yOffsetCircle;
 let xOffsetOther, yOffsetOther;
 
-let history = [];
-let historyPos = 1;
+let undo = [];
+let redo = [];
 
-history.push(document.getElementById("ID_SVG"));
+undo.push(document.getElementById("ID_SVG").cloneNode(true));
 
 document.getElementById("ID_SVG").setAttribute("width", document.getElementById("workingArea").getBoundingClientRect().width - 5);
 document.getElementById("ID_SVG").setAttribute("height", document.getElementById("workingArea").getBoundingClientRect().height - 9);
@@ -215,15 +215,9 @@ function deselect(elem, event) {
   closeRightClickMenu();
 
   if (elemSelected != null) {
-    while (history.length - 1 > historyPos) {
-      history.pop();
-    }
-    history.push(document.getElementById("ID_SVG").cloneNode(true));
-    historyPos = history.length;
+    redo = [];
+    undo.push(document.getElementById("ID_SVG").cloneNode(true));
   }
-  console.log("gespeichert");
-  console.log(historyPos);
-  console.log(history);
 
   if (event.target !== elem) {
     elemSelectedMoving = null;
@@ -279,7 +273,6 @@ function findScreenCoords(mouseEvent) {
 
     elemSelectedMoving.setAttribute("x", snap(mouse.x + document.getElementById("workingArea").scrollLeft - xOffsetOther));
     elemSelectedMoving.setAttribute("y", snap(mouse.y + document.getElementById("workingArea").scrollTop - yOffsetOther));
-    resizeSVG();
   }
 
   if (elemSelected != null) {
@@ -337,6 +330,8 @@ function findScreenCoords(mouseEvent) {
   if (dragedBottomCenter) {
     elemSelected.setAttribute("height", snap(dragedElem.height + mouse.y - dragedElem.y));
   }
+
+  resizeSVG();
 }
 
 document.getElementById("workingArea").onmousemove = findScreenCoords;
@@ -346,7 +341,6 @@ function resizeSVG() {
   let xOutside = 0,
     yOutside = 0;
 
-  console.log("testttt");
   for (let i = 1; i < svgChildren.length; i++) {
     xOutside =
       svgChildren[i].getBoundingClientRect().x + document.getElementById("workingArea").scrollLeft + svgChildren[i].getBoundingClientRect().width > xOutside
@@ -357,8 +351,8 @@ function resizeSVG() {
         ? svgChildren[i].getBoundingClientRect().y + document.getElementById("workingArea").scrollTop + svgChildren[i].getBoundingClientRect().height
         : yOutside;
   }
-  console.log(xOutside);
-  console.log(yOutside);
+  xOutside = xOutside > document.getElementById("workingArea").getBoundingClientRect().width ? xOutside : document.getElementById("workingArea").getBoundingClientRect().width;
+  yOutside = yOutside > document.getElementById("workingArea").getBoundingClientRect().height ? yOutside : document.getElementById("workingArea").getBoundingClientRect().height;
   document.getElementById("ID_SVG").setAttribute("width", xOutside);
   document.getElementById("ID_SVG").setAttribute("height", yOutside);
 }
@@ -513,17 +507,18 @@ document.body.addEventListener(
     }
 
     if (key == 90 && ctrl && shift) {
-      if (historyPos < history.length) {
+      if (redo.length > 0) {
         document.getElementById("ID_SVG").remove();
-        historyPos++;
-        document.getElementById("workingArea").prepend(history[historyPos - 1]);
+        document.getElementById("workingArea").prepend(redo[redo.length - 1].cloneNode(true));
+        undo.push(redo[redo.length - 1]);
+        redo.pop();
       }
     } else if (key == 90 && ctrl) {
-      if (historyPos > 2) {
+      if (undo.length > 1) {
         document.getElementById("ID_SVG").remove();
-        document.getElementById("workingArea").prepend(history[historyPos - 2]);
-        historyPos--;
-        console.log(historyPos);
+        document.getElementById("workingArea").prepend(undo[undo.length - 2].cloneNode(true));
+        redo.push(undo[undo.length - 1]);
+        undo.pop();
       }
     }
 
