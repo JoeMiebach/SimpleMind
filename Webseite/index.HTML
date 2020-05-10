@@ -6,7 +6,9 @@
   </head>
   <body>
     <canvas id="canvas"></canvas>
-    <div id="workingArea">
+    <div id="workingArea" data-zoom-on-wheel="scaling-property: transform"
+    data-pan-on-drag
+    style="height: 80vh; overflow:hidden">
 
       <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
 
@@ -53,14 +55,14 @@
         <rect onmousedown="select(this)" x="50" y="20" rx="9999999999999999999999999999" ry="9999999999999999999999999999" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
 
         <div id="rightClickMenu">
-            <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()">Kopieren</div>
-            <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()">Einfügen</div>
-            <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()">Ausschneiden</div>
-            <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()">Löschen</div>
-            <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()">Eine Ebene nach Hinten</div>
-            <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()">Eine Ebene nach Vorne</div>
-            <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()">Ganz nach hinten</div>
-            <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()">Ganz nach vorne</div>
+            <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()"><span><img class="rightClickIcon" src="img/copy.png">Kopieren</div>
+            <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()"><span><img class="rightClickIcon" src="img/paste.png">Einfügen</div>
+            <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()"><span><img class="rightClickIcon" src="img/cut.png">Ausschneiden</div>
+            <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()"><span><img class="rightClickIcon" src="img/delete.png">Löschen</div>
+            <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Hinten</div>
+            <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Vorne</div>
+            <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="img/toBack.png"></span>Ganz nach hinten</div>
+            <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="img/toFront.png"></span>Ganz nach vorne</div>
         </div>
         
         
@@ -69,9 +71,30 @@
     <div id="sidebar">
       <button id="BTNExportToPng">export as PNG</button>
       <button id="BTNExportToJpg">export as JPG</button>
+
+
+      <div class="controls">
+        <div class="info">
+          <ul>
+            <li>Left mouse button - pan</li>
+            <li>Right mouse button - rotate</li>
+            <li>Mouse wheel - zoom</li>
+          </ul>
+        </div>
+        <button id="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect controls-button">
+          Reset
+        </button>
+      </div>
     </div>
+
+
+    
+    <script src="zoom.js"></script>
 
     <script src="script.js"></script>
     <script src="export.js"></script>
+    <script src="zoom.js"></script>
+
+
   </body>
 </html>
