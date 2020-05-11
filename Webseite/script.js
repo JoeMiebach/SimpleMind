@@ -52,7 +52,17 @@ function select(elem) {
 		xOffsetOther = mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("x");
 		yOffsetOther = mouse.y + workingArea.scrollTop - elemSelected.getAttribute("y");
 
-		delSelectionBox();
+		if(document.getElementById("selectionVisualisation") != null) {
+			document.getElementById("selectionVisualisation").remove();
+			document.getElementById("dragTopLeft").remove();
+			document.getElementById("dragTopCenter").remove();
+			document.getElementById("dragTopRight").remove();
+			document.getElementById("dragCenterRight").remove();
+			document.getElementById("dragBottomRight").remove();
+			document.getElementById("dragBottomCenter").remove();
+			document.getElementById("dragBottomLeft").remove();
+			document.getElementById("dragCenterLeft").remove();
+		}
 
 		const selectionVisualisation = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 
@@ -67,63 +77,63 @@ function select(elem) {
 		selectionVisualisation.setAttribute("stroke-linejoin", "round");
 		selectionVisualisation.setAttribute("fill", "none");
 		selectionVisualisation.setAttribute("id", "selectionVisualisation");
-		svg.appendChild(selectionVisualisation);
+		document.getElementById("ID_SVG").appendChild(selectionVisualisation);
 
 		const dragTopLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragTopLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
 		dragTopLeft.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
 		dragTopLeft.setAttribute("id", "dragTopLeft");
 		dragTopLeft.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragTopLeft);
+		document.getElementById("ID_SVG").appendChild(dragTopLeft);
 
 		const dragTopRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragTopRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
 		dragTopRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
 		dragTopRight.setAttribute("id", "dragTopRight");
 		dragTopRight.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragTopRight);
+		document.getElementById("ID_SVG").appendChild(dragTopRight);
 
 		const dragBottomRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragBottomRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
 		dragBottomRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
 		dragBottomRight.setAttribute("id", "dragBottomRight");
 		dragBottomRight.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragBottomRight);
+		document.getElementById("ID_SVG").appendChild(dragBottomRight);
 
 		const dragBottomLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragBottomLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
 		dragBottomLeft.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
 		dragBottomLeft.setAttribute("id", "dragBottomLeft");
 		dragBottomLeft.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragBottomLeft);
+		document.getElementById("ID_SVG").appendChild(dragBottomLeft);
 
 		const dragCenterLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragCenterLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
 		dragCenterLeft.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2);
 		dragCenterLeft.setAttribute("id", "dragCenterLeft");
 		dragCenterLeft.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragCenterLeft);
+		document.getElementById("ID_SVG").appendChild(dragCenterLeft);
 
 		const dragTopCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragTopCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2);
 		dragTopCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
 		dragTopCenter.setAttribute("id", "dragTopCenter");
 		dragTopCenter.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragTopCenter);
+		document.getElementById("ID_SVG").appendChild(dragTopCenter);
 
 		const dragBottomCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragBottomCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2);
 		dragBottomCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
 		dragBottomCenter.setAttribute("id", "dragBottomCenter");
 		dragBottomCenter.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragBottomCenter);
+		document.getElementById("ID_SVG").appendChild(dragBottomCenter);
 
 		const dragCenterRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		dragCenterRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
 		dragCenterRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2);
 		dragCenterRight.setAttribute("id", "dragCenterRight");
 		dragCenterRight.setAttribute("class", "draggingPoint");
-		svg.appendChild(dragCenterRight);
+		document.getElementById("ID_SVG").appendChild(dragCenterRight);
 
 		// Resize Element
 		document.getElementById("dragBottomRight").onmousedown = function () {
@@ -195,17 +205,27 @@ function deselect(elem, event) {
 	deselectResizing();
 	closeRightClickMenu();
 
+
 	if (elemSelected != null) {
 		redo = [];
-		undo.push(svg.cloneNode(true));
-	}
+		undo.push(document.getElementById("ID_SVG").cloneNode(true));
 
-	if (event.target !== elem) {
-		elemSelectedMoving = null;
-	} else {
-		delSelectionBox();
-		elemSelectedMoving = null;
-		elemSelected = null;
+	
+		if (event.target !== elem) {
+			elemSelectedMoving = null;
+		} else {
+			document.getElementById("selectionVisualisation").remove();
+			document.getElementById("dragTopLeft").remove();
+			document.getElementById("dragTopCenter").remove();
+			document.getElementById("dragTopRight").remove();
+			document.getElementById("dragCenterRight").remove();
+			document.getElementById("dragBottomRight").remove();
+			document.getElementById("dragBottomCenter").remove();
+			document.getElementById("dragBottomLeft").remove();
+			document.getElementById("dragCenterLeft").remove();
+			elemSelected = null;
+			elemSelectedMoving = null;
+		}
 	}
 }
 
@@ -397,7 +417,19 @@ function closeRightClickMenu() {
 function rightClickMenuDelete() {
 	if (elemSelected != null) {
 		elemSelected.remove();
-		deselect();
+		closeRightClickMenu();
+
+		document.getElementById("selectionVisualisation").remove();
+		document.getElementById("dragTopLeft").remove();
+		document.getElementById("dragTopCenter").remove();
+		document.getElementById("dragTopRight").remove();
+		document.getElementById("dragCenterRight").remove();
+		document.getElementById("dragBottomRight").remove();
+		document.getElementById("dragBottomCenter").remove();
+		document.getElementById("dragBottomLeft").remove();
+		document.getElementById("dragCenterLeft").remove();
+		elemSelected = null;
+		elemSelectedMoving = null;
 	}
 }
 
@@ -405,6 +437,7 @@ let clipboard;
 function rightClickMenuCopy() {
 	if (elemSelected != null) {
 		clipboard = elemSelected.cloneNode(true);
+		closeRightClickMenu();
 	}
 }
 
@@ -412,30 +445,45 @@ function rightClickMenuCut() {
 	if (elemSelected != null) {
 		clipboard = elemSelected.cloneNode(true);
 		elemSelected.remove();
-		deselect();
-
-		svg.appendChild(clipboard);
+		
+		document.getElementById("selectionVisualisation").remove();
+		document.getElementById("dragTopLeft").remove();
+		document.getElementById("dragTopCenter").remove();
+		document.getElementById("dragTopRight").remove();
+		document.getElementById("dragCenterRight").remove();
+		document.getElementById("dragBottomRight").remove();
+		document.getElementById("dragBottomCenter").remove();
+		document.getElementById("dragBottomLeft").remove();
+		document.getElementById("dragCenterLeft").remove();
+		elemSelected = null;
+		elemSelectedMoving = null;
+		closeRightClickMenu();
+		
+		document.getElementById("ID_SVG").appendChild(clipboard);
 	}
 }
 
 function rightClickMenuPaste() {
 	if (clipboard != null) {
 		clipboard = clipboard.cloneNode(true);
-		svg.appendChild(clipboard);
+		closeRightClickMenu();
+		document.getElementById("ID_SVG").appendChild(clipboard);
 	}
 }
 
 function rightClickMenuSetBack() {
 	document.getElementById("background").after(elemSelected);
+	closeRightClickMenu();
 }
 
 function rightClickMenuSetFront() {
-	document.getElementById("selectionVisualisation").before(elemSelected);
+	document.getElementById("selectionVisualisation").before(elemSelected);		
+	closeRightClickMenu();
 }
 
 function rightClickMenuOneBack() {
 	if (elemSelected.previousElementSibling != null && elemSelected.previousElementSibling != document.getElementById("background")) elemSelected.previousElementSibling.before(elemSelected);
-}
+ }
 
 function rightClickMenuOneFront() {
 	if (elemSelected.nextElementSibling != null && elemSelected.nextElementSibling != document.getElementById("selectionVisualisation")) elemSelected.nextElementSibling.after(elemSelected);
@@ -478,42 +526,43 @@ document.body.addEventListener(
 		if (key == 90 && ctrl && shift) {
 			//Strg + Shift + Z
 			if (redo.length > 0) {
-				svg.remove();
+				document.getElementById("ID_SVG").remove();
 				workingArea.prepend(redo[redo.length - 1].cloneNode(true));
+				elemSelectedMoving = null;
+				elemSelected = null;
 				undo.push(redo[redo.length - 1]);
 				redo.pop();
+
 			}
 		} else if (key == 90 && ctrl) {
 			//Strg + Z
 			if (undo.length > 1) {
-				svg.remove();
+				document.getElementById("ID_SVG").remove();
 				workingArea.prepend(undo[undo.length - 2].cloneNode(true));
+				elemSelectedMoving = null;
+				elemSelected = null;
 				redo.push(undo[undo.length - 1]);
 				undo.pop();
+
 			}
 		}
 
 		if (key == 27) {
 			// Escape
-			deselectSelection();
-
 			closeRightClickMenu();
+
+			document.getElementById("selectionVisualisation").remove();
+			document.getElementById("dragTopLeft").remove();
+			document.getElementById("dragTopCenter").remove();
+			document.getElementById("dragTopRight").remove();
+			document.getElementById("dragCenterRight").remove();
+			document.getElementById("dragBottomRight").remove();
+			document.getElementById("dragBottomCenter").remove();
+			document.getElementById("dragBottomLeft").remove();
+			document.getElementById("dragCenterLeft").remove();
+			elemSelected = null;
+			elemSelectedMoving = null;
 		}
 	},
 	false
 );
-
-function delSelectionBox() {
-	if (document.getElementById("selectionVisualisation") != null) {
-		// DELETE DRAGBOX
-		document.getElementById("selectionVisualisation").remove();
-		document.getElementById("dragTopLeft").remove();
-		document.getElementById("dragTopCenter").remove();
-		document.getElementById("dragTopRight").remove();
-		document.getElementById("dragCenterRight").remove();
-		document.getElementById("dragBottomRight").remove();
-		document.getElementById("dragBottomCenter").remove();
-		document.getElementById("dragBottomLeft").remove();
-		document.getElementById("dragCenterLeft").remove();
-	}
-}

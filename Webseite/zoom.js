@@ -106,7 +106,7 @@ var svgPanZoomContainer = (function (t) {
         (i = {
             minScale: 0.001,
             maxScale: 10000,
-            zoomAmount: 0.01,
+            zoomAmount: 0.001,
             scalingProperty: "width/height",
         }),
         void 0 === e && (e = {}),

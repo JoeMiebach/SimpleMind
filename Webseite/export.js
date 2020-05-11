@@ -19,7 +19,24 @@ function triggerDownloadPng(imgURI) {
 btnPng.addEventListener("click", function () {
 	let bg = document.getElementById("background");
 	document.getElementById("background").remove();
-	deselectExport();
+
+	if(document.getElementById("selectionVisualisation" != null)) {
+		console.log("remove");
+		document.getElementById("selectionVisualisation").remove();
+		document.getElementById("dragTopLeft").remove();
+		document.getElementById("dragTopCenter").remove();
+		document.getElementById("dragTopRight").remove();
+		document.getElementById("dragCenterRight").remove();
+		document.getElementById("dragBottomRight").remove();
+		document.getElementById("dragBottomCenter").remove();
+		document.getElementById("dragBottomLeft").remove();
+		document.getElementById("dragCenterLeft").remove();
+	}
+
+	if(document.getElementById("background") != null) {
+		document.getElementById("background").remove();
+	}
+
 	console.log("arr");
 
 	var canvas = document.getElementById("canvas");
@@ -65,8 +82,24 @@ function triggerDownloadJpg(imgURI) {
 btnJpg.addEventListener("click", function () {
 	let bg = document.getElementById("background");
 	document.getElementById("background").remove();
-	delSelectionBox();
-	console.log("arr");
+
+	
+	if(document.getElementById("selectionVisualisation" != null)) {
+		console.log("remove");
+		document.getElementById("selectionVisualisation").remove();
+		document.getElementById("dragTopLeft").remove();
+		document.getElementById("dragTopCenter").remove();
+		document.getElementById("dragTopRight").remove();
+		document.getElementById("dragCenterRight").remove();
+		document.getElementById("dragBottomRight").remove();
+		document.getElementById("dragBottomCenter").remove();
+		document.getElementById("dragBottomLeft").remove();
+		document.getElementById("dragCenterLeft").remove();
+	}
+
+	if(document.getElementById("background") != null) {
+		document.getElementById("background").remove();
+	}
 
 	var canvas = document.getElementById("canvas");
 	canvas.setAttribute("width", svg.getAttribute("width"));
