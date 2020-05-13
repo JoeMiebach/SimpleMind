@@ -12,11 +12,21 @@
 
         <g id="background" style="pointer-events: none;">
           <defs>
-            <pattern id="patternHorizontal" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(90)">
-              <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+            <pattern id="patternHorizontal" patternUnits="userSpaceOnUse" width="120" height="30" patternTransform="rotate(90)">
+              <line id="hLine0" x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.6)" stroke-width="2" />
+              <line id="hLine1" x1="30" y="30" x2="30" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+              <line id="hLine2" x1="60" y="60" x2="60" y2="60" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+              <line id="hLine3" x1="90" y="90" x2="90" y2="90" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+              <line id="hLine4" x1="120" y="120" x2="120" y2="120" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+
+
             </pattern>
-            <pattern id="patternVertical" patternUnits="userSpaceOnUse" width="30" height="30" patternTransform="rotate(0)">
-              <line x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+            <pattern id="patternVertical" patternUnits="userSpaceOnUse" width="120" height="30" patternTransform="rotate(0)">
+              <line id="vLine0" x1="0" y="0" x2="0" y2="30" stroke="rgba(0,0,0,0.6)" stroke-width="2" />
+              <line id="vLine1" x1="30" y="30" x2="30" y2="30" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+              <line id="vLine2" x1="60" y="60" x2="60" y2="60" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+              <line id="vLine3" x1="90" y="90" x2="90" y2="90" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
+              <line id="vLine4" x1="120" y="120" x2="120" y2="120" stroke="rgba(0,0,0,0.3)" stroke-width="1" />
             </pattern>
           </defs>
 
@@ -69,15 +79,18 @@
     <div id="sidebar">
       <button id="BTNExportToPng">export as PNG</button>
       <button id="BTNExportToJpg">export as JPG</button>
+      <button onclick="exportSvg()" id="BTNExportToSvg">export as SVG</button>
+
+
     </div>
 
 
-    
     <script src="zoom.js"></script>
 
     <script src="script.js"></script>
     <script src="export.js"></script>
     <script src="zoom.js"></script>
+
 
 
   </body>

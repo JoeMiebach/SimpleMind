@@ -112,6 +112,7 @@ var svgPanZoomContainer = (function (t) {
         void 0 === e && (e = {}),
         e.noEmitStyle || ((document.head || document.body || document.documentElement).appendChild(document.createElement("style")).textContent = "[" + a + "]{overflow:scroll}[" + a + "]>:first-child{width:100%;height:100%;vertical-align:middle;}"),
         addEventListener("wheel", function (t) {
+
             if (t.ctrlKey == true) {
                 var e = m(t.target, a),
                     n = e[0],
@@ -132,6 +133,7 @@ var svgPanZoomContainer = (function (t) {
         (t.setScale = o),
         (t.resetScale = function (t, e) {
             o(t, 1, e);
+            console.log(t.zoom);
         }),
         (t.zoom = l),
         t

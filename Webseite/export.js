@@ -124,3 +124,19 @@ btnJpg.addEventListener("click", function () {
 	img.src = url;
 	svg.prepend(bg);
 });
+
+
+function exportSvg() {
+	//get svg element.
+	var svg = document.getElementById("ID_SVG");
+
+
+	//convert svg source to URI data scheme.
+	var url = "data:image/svg+xml;utf8,"+svg.outerHTML;
+
+	console.log(url)
+
+	//set url value to a element's href attribute.
+	document.getElementById("svgDownload").setAttribute("href", url);
+	//you can download svg file by right click menu.
+}

@@ -35,6 +35,8 @@
 svg {
   position: relative;
 }
+
+
 #workingArea {
   position: absolute;
   width: calc(100% - 100px);
@@ -49,6 +51,7 @@ svg {
   height: 100vh;
   background: rgba(0, 0, 0, 0.2);
 }
+
 
 .draggable:hover {
   cursor: move;
