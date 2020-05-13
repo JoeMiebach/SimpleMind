@@ -21,14 +21,6 @@ let snappingDistance = 30;
 svg.setAttribute("width", workingArea.getBoundingClientRect().width - 5);
 svg.setAttribute("height", workingArea.getBoundingClientRect().height - 9);
 
-document.getElementById("patternHorizontal").setAttribute("height", snappingDistance);
-document.getElementById("patternHorizontal").setAttribute("width", snappingDistance);
-document.getElementById("patternHorizontal").setAttribute("y2", snappingDistance);
-
-document.getElementById("patternVertical").setAttribute("height", snappingDistance);
-document.getElementById("patternVertical").setAttribute("width", snappingDistance);
-document.getElementById("patternVertical").setAttribute("y2", snappingDistance);
-
 let dragedElem = {
 	x: 0,
 	y: 0,
@@ -303,21 +295,29 @@ function mouseMoving(mouseEvent) {
 	//Resizing
 
 	if (dragedCenterLeft) {
-		elemSelected.setAttribute("x", snap(mouse.x));
-		elemSelected.setAttribute("width", snap(dragedElem.x - snap(mouse.x) + dragedElem.width));
+		if (snap(dragedElem.x - snap(mouse.x) + dragedElem.width) > 0) {
+			elemSelected.setAttribute("x", snap(mouse.x));
+			elemSelected.setAttribute("width", snap(dragedElem.x - snap(mouse.x) + dragedElem.width));
+		}
 	}
 
 	if (dragedCenterRight) {
-		elemSelected.setAttribute("width", snap(dragedElem.width + mouse.x - dragedElem.x));
+		if (snap(dragedElem.width + mouse.x - dragedElem.x) > 0) {
+			elemSelected.setAttribute("width", snap(dragedElem.width + mouse.x - dragedElem.x));
+		}
 	}
 
 	if (dragedTopCenter) {
-		elemSelected.setAttribute("y", snap(mouse.y));
-		elemSelected.setAttribute("height", snap(dragedElem.y - snap(mouse.y) + dragedElem.height));
+		if (snap(dragedElem.y - snap(mouse.y) + dragedElem.height) > 0) {
+			elemSelected.setAttribute("y", snap(mouse.y));
+			elemSelected.setAttribute("height", snap(dragedElem.y - snap(mouse.y) + dragedElem.height));
+		}
 	}
 
 	if (dragedBottomCenter) {
-		elemSelected.setAttribute("height", snap(dragedElem.height + mouse.y - dragedElem.y));
+		if (snap(dragedElem.height + mouse.y - dragedElem.y) > 0) {
+			elemSelected.setAttribute("height", snap(dragedElem.height + mouse.y - dragedElem.y));
+		}
 	}
 	resizeSVG();
 }
@@ -456,8 +456,6 @@ function rightClickMenuCut() {
 		elemSelected = null;
 		elemSelectedMoving = null;
 		closeRightClickMenu();
-
-		document.getElementById("ID_SVG").appendChild(clipboard);
 	}
 }
 
