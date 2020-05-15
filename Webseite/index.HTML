@@ -67,26 +67,33 @@
         <rect onmousedown="select(this)" x="50" y="20" rx="20" ry="20" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
         <rect onmousedown="select(this)" x="50" y="20" rx="9999999999999999999999999999" ry="9999999999999999999999999999" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
 
-        <div id="rightClickMenu">
-            <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()"><span><img class="rightClickIcon" src="img/copy.png">Kopieren</div>
-            <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()"><span><img class="rightClickIcon" src="img/paste.png">Einfügen</div>
-            <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()"><span><img class="rightClickIcon" src="img/cut.png">Ausschneiden</div>
-            <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()"><span><img class="rightClickIcon" src="img/delete.png">Löschen</div>
-            <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Hinten</div>
-            <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Vorne</div>
-            <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="img/toBack.png"></span>Ganz nach hinten</div>
-            <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="img/toFront.png"></span>Ganz nach vorne</div>
-        </div>
+       
       </svg>
         
-        
+      
     </div>
 
     <div id="sidebar">
-      <button id="navStyle" class="nav">Style</button>
-      <button id="navPosition" class="nav">Position</button>
-      <button id="navFile" class="nav">File</button>
 
+      <div id="navWrapper">
+        <div id="navSelection"></div>
+
+        <div id="navStyle" class="nav">Style</div>
+        <div id="navPosition" class="nav">Position</div>
+        <div id="navFile" class="nav">File</div>
+      </div>
+
+      <div id="rightClickMenu">
+        <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()"><span><img class="rightClickIcon" src="img/copy.png">Kopieren</div>
+        <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()"><span><img class="rightClickIcon" src="img/paste.png">Einfügen</div>
+        <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()"><span><img class="rightClickIcon" src="img/cut.png">Ausschneiden</div>
+        <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()"><span><img class="rightClickIcon" src="img/delete.png">Löschen</div>
+        <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Hinten</div>
+        <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Vorne</div>
+        <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="img/toBack.png"></span>Ganz nach hinten</div>
+        <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="img/toFront.png"></span>Ganz nach vorne</div>
+      </div>
+      
       <div id="tabContainer">
 
         <div class="tabs" id="tabStyle">
@@ -94,8 +101,12 @@
         </div>
 
         <div class="tabs" id="tabPosition">
-          <h>POSITION</h>
           
+          <div class="inputWrapper">
+            <div class="inputText">Weite</div>
+            <input type="number" class="inputInput" tabindex="-1">
+          </div>
+
           <div class="link" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Hinten</div>
           <div class="link" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Vorne</div>
           <div class="link" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="img/toBack.png"></span>Ganz nach hinten</div>
@@ -103,9 +114,9 @@
         </div>
 
         <div class="tabs" id="tabFile">
-          <p class="link" id="tabBTNExportToPng">export as PNG</p>
-          <p class="link" id="tabBTNExportToJpg">export as JPG</p>
-          <p class="link" id="tabBTNExportToSvg">export as SVG</p>
+          <p class="link" id="BTNExportToPng">export as PNG</p>
+          <p class="link" id="BTNExportToJpg">export as JPG</p>
+          <p class="link" id="BTNExportToSvg">export as SVG</p>
         </div>
       </div>
     </div>

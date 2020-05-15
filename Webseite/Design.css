@@ -34,26 +34,19 @@
 
 svg {
 	position: relative;
+	border: 1px solid grey;
+	width: 10000px;
+	height: 10000px;
 }
 
 #workingArea {
 	position: absolute;
-	width: calc(100% - 150px);
+	width: 100%;
 	height: 100vh;
-	overflow: scroll;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
-#sidebar {
-	position: absolute;
-	right: 0px;
-	width: 150px;
-	height: 100vh;
-	overflow: hidden;
-
-	color: #fff;
-	background: rgba(0, 0, 0, 0.75);
-	height: 100vh;
-}
 
 .draggable:hover {
 	cursor: move;
@@ -125,34 +118,86 @@ svg {
 	padding-right: 5px;
 }
 
-#tabContainer {
-	transition-property: left;
-	transition-duration: 0.3s;
 
-	left: 0px;
-	position: relative;
-	width: 450px;
-	margin: 0 auto;
-	display: flex;
-	justify-content: space-between;
+
+
+
+
+#sidebar {
+	position: absolute;
+	right: 0px;
+	width: 250px;
 	height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+	color: #333333;
+	background: #fff;
+  height: 100vh;
+  border-left: 1px solid rgb(150, 150, 150);
+}
+
+
+#tabContainer {
+	position: relative;
+  width: 750px;
+  height: 100vh;
+  left: 0px;
+  transition: 300ms;
+  display: flex;
 }
 
 .tabs {
-	width: 150px;
-	display: inline-block;
+  padding: 5px;
+  position: relative;
+  width: 240px;
+  overflow-y: scroll;
 }
 
 .link {
-	font-size: 16px;
-	font-weight: 300;
-	text-align: center;
-	position: relative;
-	height: 40px;
-	line-height: 40px;
-	margin-top: 10px;
-	overflow: hidden;
-	width: 90%;
-	margin-left: 5%;
-	cursor: pointer;
+  position: relative;
+}
+
+.nav {
+  width: 33.333333%;
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  cursor: pointer;
+}
+
+#navWrapper {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  background:rgb(200,200,200);
+}
+
+#navSelection {
+  position: absolute;
+  width: 33.333333%;
+  height: 100%;
+  left: 0%;
+  background: #fff;
+  transition: 300ms;
+}
+
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  height: 30px;
+}
+
+.inputText {
+  position: relative;
+  float: left;
+  background: orange;
+}
+
+.inputInput {
+  position: absolute;
+  width: 50px;
+  right: 0px;
 }

@@ -16,7 +16,7 @@ let undo = [];
 let redo = [];
 undo.push(svg.cloneNode(true));
 //Settings
-let snappingDistance = 30;
+let snappingDistance = 20;
 
 document.getElementById("patternHorizontal").setAttribute("width", snappingDistance);
 document.getElementById("patternHorizontal").setAttribute("height", snappingDistance);
@@ -82,8 +82,12 @@ function select(elem) {
 		xOffsetCircle = mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("cx");
 		yOffsetCircle = mouse.y + workingArea.scrollTop - elemSelected.getAttribute("cy");
 
-		xOffsetOther = (mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("x") - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal;
-		yOffsetOther = (mouse.y + workingArea.scrollTop - elemSelected.getAttribute("y") - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal;
+		xOffsetOther = (mouse.x - (elemSelected.getAttribute("x")));
+		yOffsetOther = (mouse.y - (elemSelected.getAttribute("y")));
+
+		console.log(xOffsetOther + " " + yOffsetOther)
+
+		
 
 		if (document.getElementById("selectionVisualisation") != null) {
 			document.getElementById("selectionVisualisation").remove();
@@ -101,14 +105,13 @@ function select(elem) {
 
 		console.log(scaleGlobal);
 
-		selectionVisualisation.setAttribute("x", elemSelected.getBoundingClientRect().x - document.getElementById("ID_SVG").getBoundingClientRect().x);
-		selectionVisualisation.setAttribute("y", elemSelected.getBoundingClientRect().y - document.getElementById("ID_SVG").getBoundingClientRect().y);
+		selectionVisualisation.setAttribute("x", (elemSelected.getBoundingClientRect().x - document.getElementById("ID_SVG").getBoundingClientRect().x) /scaleGlobal);
+		selectionVisualisation.setAttribute("y", (elemSelected.getBoundingClientRect().y - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 
 		selectionVisualisation.setAttribute("width", (elemSelected.getBoundingClientRect().width) / scaleGlobal) ;
 		selectionVisualisation.setAttribute("height", (elemSelected.getBoundingClientRect().height) / scaleGlobal);
-		selectionVisualisation.setAttribute("stroke", "black");
-		selectionVisualisation.setAttribute("stroke-width", "3");
-		selectionVisualisation.setAttribute("stroke-opacity", "0.5");
+		selectionVisualisation.setAttribute("stroke", "grey");
+		selectionVisualisation.setAttribute("stroke-width", "1");
 		selectionVisualisation.setAttribute("stroke-linejoin", "round");
 		selectionVisualisation.setAttribute("fill", "none");
 		selectionVisualisation.setAttribute("id", "selectionVisualisation");
@@ -285,6 +288,10 @@ function mouseMoving(mouseEvent) {
 		//FireFox
 		mouse.x = mouseEvent.clientX;
 		mouse.y = mouseEvent.clientY;
+
+		mouse.x = (mouse.x - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal;
+		mouse.y = (mouse.y - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal;
+
 	} else {
 		//IE
 		mouse.x = window.event.clientX;
@@ -295,8 +302,8 @@ function mouseMoving(mouseEvent) {
 		elemSelectedMoving.setAttribute("cx", snap(mouse.x + workingArea.scrollLeft - xOffsetCircle));
 		elemSelectedMoving.setAttribute("cy", snap(mouse.y + workingArea.scrollTop - yOffsetCircle));
 
-		elemSelectedMoving.setAttribute("x", snap((mouse.x + workingArea.scrollLeft - xOffsetOther - document.getElementById("ID_SVG").getBoundingClientRect().x))/scaleGlobal);
-		elemSelectedMoving.setAttribute("y", snap((mouse.y + workingArea.scrollTop - yOffsetOther - document.getElementById("ID_SVG").getBoundingClientRect().y))/scaleGlobal);
+		elemSelectedMoving.setAttribute("x", snap(mouse.x - xOffsetOther));
+		elemSelectedMoving.setAttribute("y", snap(mouse.y - yOffsetOther));
 	}
 
 	if (elemSelected != null) {
@@ -327,28 +334,28 @@ function mouseMoving(mouseEvent) {
 	//Resizing
 
 	if (dragedCenterLeft) {
-		if (snap(dragedElem.x - snap(mouse.x) + dragedElem.width) > 0) {
+		if (snap(dragedElem.x - snap(mouse.x) + dragedElem.width / scaleGlobal) > 0) {
 			elemSelected.setAttribute("x", snap(mouse.x));
-			elemSelected.setAttribute("width", snap(dragedElem.x - snap(mouse.x) + dragedElem.width));
+			elemSelected.setAttribute("width", snap(dragedElem.x - snap(mouse.x) + dragedElem.width / scaleGlobal));
 		}
 	}
 
 	if (dragedCenterRight) {
-		if (snap(dragedElem.width + mouse.x - dragedElem.x) > 0) {
-			elemSelected.setAttribute("width", snap(dragedElem.width + mouse.x - dragedElem.x));
+		if (snap(dragedElem.width / scaleGlobal + mouse.x - dragedElem.x) > 0) {
+			elemSelected.setAttribute("width", snap(dragedElem.width / scaleGlobal + mouse.x - dragedElem.x));
 		}
 	}
 
 	if (dragedTopCenter) {
-		if (snap(dragedElem.y - snap(mouse.y) + dragedElem.height) > 0) {
+		if (snap(dragedElem.y - snap(mouse.y) + dragedElem.height / scaleGlobal) > 0) {
 			elemSelected.setAttribute("y", snap(mouse.y));
-			elemSelected.setAttribute("height", snap(dragedElem.y - snap(mouse.y) + dragedElem.height));
+			elemSelected.setAttribute("height", snap(dragedElem.y - snap(mouse.y) + dragedElem.height / scaleGlobal));
 		}
 	}
 
 	if (dragedBottomCenter) {
-		if (snap(dragedElem.height + mouse.y - dragedElem.y) > 0) {
-			elemSelected.setAttribute("height", snap(dragedElem.height + mouse.y - dragedElem.y));
+		if (snap(dragedElem.height / scaleGlobal + mouse.y - dragedElem.y) > 0) {
+			elemSelected.setAttribute("height", snap(dragedElem.height / scaleGlobal + mouse.y - dragedElem.y));
 		}
 	}
 	resizeSVG();
@@ -357,7 +364,7 @@ function mouseMoving(mouseEvent) {
 workingArea.onmousemove = mouseMoving;
 
 function resizeSVG() {
-	let svgChildren = svg.children;
+	let svgChildren = document.getElementById("ID_SVG").children;
 	let xOutside = 0,
 		yOutside = 0;
 
@@ -371,10 +378,10 @@ function resizeSVG() {
 				? svgChildren[i].getBoundingClientRect().y + workingArea.scrollTop + svgChildren[i].getBoundingClientRect().height
 				: yOutside;
 	}
-	//xOutside = xOutside > workingArea.getBoundingClientRect().width ? xOutside : workingArea.getBoundingClientRect().width;
-	//yOutside = yOutside > workingArea.getBoundingClientRect().height ? yOutside : workingArea.getBoundingClientRect().height;
-	svg.setAttribute("width", xOutside);
-	svg.setAttribute("height", yOutside);
+	xOutside = xOutside > workingArea.getBoundingClientRect().width ? xOutside : workingArea.getBoundingClientRect().width;
+	yOutside = yOutside > workingArea.getBoundingClientRect().height ? yOutside : workingArea.getBoundingClientRect().height;
+	document.getElementById("ID_SVG").setAttribute("width", xOutside);
+	document.getElementById("ID_SVG").setAttribute("height", yOutside);
 }
 
 // Right click Menu
@@ -385,13 +392,13 @@ window.oncontextmenu = function () {
 };
 
 function snap(coord) {
-	return Math.round(coord / (snappingDistance * scaleGlobal)) * (snappingDistance * scaleGlobal);
+	return Math.round(coord / snappingDistance) * snappingDistance;
 }
 
 function openRightClickMenu() {
 	document.getElementById("rightClickMenu").style.display = "block";
-	document.getElementById("rightClickMenu").style.left = mouse.x + "px";
-	document.getElementById("rightClickMenu").style.top = mouse.y + "px";
+	document.getElementById("rightClickMenu").style.left = (mouse.x) + document.getElementById("ID_SVG").getBoundingClientRect().x + "px";
+	document.getElementById("rightClickMenu").style.top = (mouse.y) + document.getElementById("ID_SVG").getBoundingClientRect().y + "px";
 
 	elemSelectedMoving = null;
 
@@ -558,6 +565,19 @@ document.body.addEventListener(
 				workingArea.prepend(redo[redo.length - 1].cloneNode(true));
 				elemSelectedMoving = null;
 				elemSelected = null;
+				
+				if(document.getElementById("selectionVisualisation") != null) {
+					document.getElementById("selectionVisualisation").remove();
+					document.getElementById("dragTopLeft").remove();
+					document.getElementById("dragTopCenter").remove();
+					document.getElementById("dragTopRight").remove();
+					document.getElementById("dragCenterRight").remove();
+					document.getElementById("dragBottomRight").remove();
+					document.getElementById("dragBottomCenter").remove();
+					document.getElementById("dragBottomLeft").remove();
+					document.getElementById("dragCenterLeft").remove();
+				}
+
 				undo.push(redo[redo.length - 1]);
 				redo.pop();
 			}
@@ -568,6 +588,19 @@ document.body.addEventListener(
 				workingArea.prepend(undo[undo.length - 2].cloneNode(true));
 				elemSelectedMoving = null;
 				elemSelected = null;
+
+				if(document.getElementById("selectionVisualisation") != null) {
+					document.getElementById("selectionVisualisation").remove();
+					document.getElementById("dragTopLeft").remove();
+					document.getElementById("dragTopCenter").remove();
+					document.getElementById("dragTopRight").remove();
+					document.getElementById("dragCenterRight").remove();
+					document.getElementById("dragBottomRight").remove();
+					document.getElementById("dragBottomCenter").remove();
+					document.getElementById("dragBottomLeft").remove();
+					document.getElementById("dragCenterLeft").remove();
+				}
+
 				redo.push(undo[undo.length - 1]);
 				undo.pop();
 			}
@@ -577,17 +610,23 @@ document.body.addEventListener(
 			// Escape
 			closeRightClickMenu();
 
-			document.getElementById("selectionVisualisation").remove();
-			document.getElementById("dragTopLeft").remove();
-			document.getElementById("dragTopCenter").remove();
-			document.getElementById("dragTopRight").remove();
-			document.getElementById("dragCenterRight").remove();
-			document.getElementById("dragBottomRight").remove();
-			document.getElementById("dragBottomCenter").remove();
-			document.getElementById("dragBottomLeft").remove();
-			document.getElementById("dragCenterLeft").remove();
-			elemSelected = null;
-			elemSelectedMoving = null;
+
+			console.log(mouse.x + " " + mouse.y)
+
+			
+			if(document.getElementById("selectionVisualisation") != null) {
+				document.getElementById("selectionVisualisation").remove();
+				document.getElementById("dragTopLeft").remove();
+				document.getElementById("dragTopCenter").remove();
+				document.getElementById("dragTopRight").remove();
+				document.getElementById("dragCenterRight").remove();
+				document.getElementById("dragBottomRight").remove();
+				document.getElementById("dragBottomCenter").remove();
+				document.getElementById("dragBottomLeft").remove();
+				document.getElementById("dragCenterLeft").remove();
+				elemSelected = null;
+				elemSelectedMoving = null;
+			}
 		}
 	},
 	false
