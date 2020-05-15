@@ -274,9 +274,9 @@ function cssMatrixToTransformObj ( matrix ) {
 document.body.addEventListener("wheel", zoomShortcut, { passive: false });
 
 function zoomShortcut(e) {
-    if (e.ctrlKey) {
-        event.preventDefault();
-    }
+	if (e.ctrlKey) {
+		event.preventDefault();
+	}
 }
 
 

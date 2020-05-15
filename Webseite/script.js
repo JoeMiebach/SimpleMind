@@ -85,7 +85,7 @@ function select(elem) {
 		xOffsetOther = (mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("x") - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal;
 		yOffsetOther = (mouse.y + workingArea.scrollTop - elemSelected.getAttribute("y") - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal;
 
-		if(document.getElementById("selectionVisualisation") != null) {
+		if (document.getElementById("selectionVisualisation") != null) {
 			document.getElementById("selectionVisualisation").remove();
 			document.getElementById("dragTopLeft").remove();
 			document.getElementById("dragTopCenter").remove();
@@ -240,12 +240,10 @@ function deselect(elem, event) {
 	deselectResizing();
 	closeRightClickMenu();
 
-
 	if (elemSelected != null) {
 		redo = [];
 		undo.push(document.getElementById("ID_SVG").cloneNode(true));
 
-	
 		if (event.target !== elem) {
 			elemSelectedMoving = null;
 		} else {
@@ -329,27 +327,27 @@ function mouseMoving(mouseEvent) {
 	//Resizing
 
 	if (dragedCenterLeft) {
-		if(snap(dragedElem.x - snap(mouse.x) + dragedElem.width) > 0) {
+		if (snap(dragedElem.x - snap(mouse.x) + dragedElem.width) > 0) {
 			elemSelected.setAttribute("x", snap(mouse.x));
 			elemSelected.setAttribute("width", snap(dragedElem.x - snap(mouse.x) + dragedElem.width));
 		}
 	}
 
 	if (dragedCenterRight) {
-		if(snap(dragedElem.width + mouse.x - dragedElem.x) > 0) {
+		if (snap(dragedElem.width + mouse.x - dragedElem.x) > 0) {
 			elemSelected.setAttribute("width", snap(dragedElem.width + mouse.x - dragedElem.x));
 		}
 	}
 
 	if (dragedTopCenter) {
-		if(snap(dragedElem.y - snap(mouse.y) + dragedElem.height) > 0) {
+		if (snap(dragedElem.y - snap(mouse.y) + dragedElem.height) > 0) {
 			elemSelected.setAttribute("y", snap(mouse.y));
 			elemSelected.setAttribute("height", snap(dragedElem.y - snap(mouse.y) + dragedElem.height));
 		}
 	}
 
 	if (dragedBottomCenter) {
-		if(snap(dragedElem.height + mouse.y - dragedElem.y) > 0) {
+		if (snap(dragedElem.height + mouse.y - dragedElem.y) > 0) {
 			elemSelected.setAttribute("height", snap(dragedElem.height + mouse.y - dragedElem.y));
 		}
 	}
@@ -373,8 +371,8 @@ function resizeSVG() {
 				? svgChildren[i].getBoundingClientRect().y + workingArea.scrollTop + svgChildren[i].getBoundingClientRect().height
 				: yOutside;
 	}
-	xOutside = xOutside > workingArea.getBoundingClientRect().width ? xOutside : workingArea.getBoundingClientRect().width;
-	yOutside = yOutside > workingArea.getBoundingClientRect().height ? yOutside : workingArea.getBoundingClientRect().height;
+	//xOutside = xOutside > workingArea.getBoundingClientRect().width ? xOutside : workingArea.getBoundingClientRect().width;
+	//yOutside = yOutside > workingArea.getBoundingClientRect().height ? yOutside : workingArea.getBoundingClientRect().height;
 	svg.setAttribute("width", xOutside);
 	svg.setAttribute("height", yOutside);
 }
@@ -477,7 +475,7 @@ function rightClickMenuCut() {
 	if (elemSelected != null) {
 		clipboard = elemSelected.cloneNode(true);
 		elemSelected.remove();
-		
+
 		document.getElementById("selectionVisualisation").remove();
 		document.getElementById("dragTopLeft").remove();
 		document.getElementById("dragTopCenter").remove();
@@ -490,7 +488,6 @@ function rightClickMenuCut() {
 		elemSelected = null;
 		elemSelectedMoving = null;
 		closeRightClickMenu();
-		
 	}
 }
 
@@ -508,13 +505,13 @@ function rightClickMenuSetBack() {
 }
 
 function rightClickMenuSetFront() {
-	document.getElementById("selectionVisualisation").before(elemSelected);		
+	document.getElementById("selectionVisualisation").before(elemSelected);
 	closeRightClickMenu();
 }
 
 function rightClickMenuOneBack() {
 	if (elemSelected.previousElementSibling != null && elemSelected.previousElementSibling != document.getElementById("background")) elemSelected.previousElementSibling.before(elemSelected);
- }
+}
 
 function rightClickMenuOneFront() {
 	if (elemSelected.nextElementSibling != null && elemSelected.nextElementSibling != document.getElementById("selectionVisualisation")) elemSelected.nextElementSibling.after(elemSelected);
@@ -563,7 +560,6 @@ document.body.addEventListener(
 				elemSelected = null;
 				undo.push(redo[redo.length - 1]);
 				redo.pop();
-
 			}
 		} else if (key == 90 && ctrl) {
 			//Strg + Z
@@ -574,7 +570,6 @@ document.body.addEventListener(
 				elemSelected = null;
 				redo.push(undo[undo.length - 1]);
 				undo.pop();
-
 			}
 		}
 
