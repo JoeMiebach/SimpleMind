@@ -18,7 +18,46 @@ undo.push(svg.cloneNode(true));
 //Settings
 let snappingDistance = 30;
 
+document.getElementById("patternHorizontal").setAttribute("width", snappingDistance);
+document.getElementById("patternHorizontal").setAttribute("height", snappingDistance);
+document.getElementById("patternVertical").setAttribute("width", snappingDistance);
+document.getElementById("patternVertical").setAttribute("height", snappingDistance);
 
+document.getElementById("patternVerticalHighlight").setAttribute("width", snappingDistance * 5);
+document.getElementById("patternVerticalHighlight").setAttribute("height", snappingDistance);
+
+document.getElementById("patternHorzontalHighlight").setAttribute("width", snappingDistance * 5);
+document.getElementById("patternHorzontalHighlight").setAttribute("height", snappingDistance);
+
+
+
+changeCords("hLine0", snappingDistance * 0);
+changeCords("hLine1", snappingDistance * 1);
+changeCords("hLine2", snappingDistance * 2);
+changeCords("hLine3", snappingDistance * 3);
+
+
+
+
+changeCords("vLine0", snappingDistance * 0);
+changeCords("vLine1", snappingDistance * 1);
+changeCords("vLine2", snappingDistance * 2);
+changeCords("vLine3", snappingDistance * 3);
+
+
+function changeCords(elemId, num) {
+	document.getElementById(elemId).setAttribute("x1", num);
+	document.getElementById(elemId).setAttribute("x2", num);
+	document.getElementById(elemId).setAttribute("y2", num);
+
+	if(elemId = "hLine0") {
+		document.getElementById(elemId).setAttribute("y2", snappingDistance);
+	}
+
+	if(elemId = "vLine0") {
+		document.getElementById(elemId).setAttribute("y2", snappingDistance);
+	}
+}
 
 svg.setAttribute("width", workingArea.getBoundingClientRect().width - 5);
 svg.setAttribute("height", workingArea.getBoundingClientRect().height - 9);
@@ -43,8 +82,8 @@ function select(elem) {
 		xOffsetCircle = mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("cx");
 		yOffsetCircle = mouse.y + workingArea.scrollTop - elemSelected.getAttribute("cy");
 
-		xOffsetOther = mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("x");
-		yOffsetOther = mouse.y + workingArea.scrollTop - elemSelected.getAttribute("y");
+		xOffsetOther = (mouse.x + workingArea.scrollLeft - elemSelected.getAttribute("x") - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal;
+		yOffsetOther = (mouse.y + workingArea.scrollTop - elemSelected.getAttribute("y") - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal;
 
 		if(document.getElementById("selectionVisualisation") != null) {
 			document.getElementById("selectionVisualisation").remove();
@@ -60,13 +99,15 @@ function select(elem) {
 
 		const selectionVisualisation = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 
-		selectionVisualisation.setAttribute("x", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		selectionVisualisation.setAttribute("y", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
+		console.log(scaleGlobal);
 
-		selectionVisualisation.setAttribute("width", elemSelected.getBoundingClientRect().width);
-		selectionVisualisation.setAttribute("height", elemSelected.getBoundingClientRect().height);
-		selectionVisualisation.setAttribute("stroke", "gray");
-		selectionVisualisation.setAttribute("stroke-width", "1");
+		selectionVisualisation.setAttribute("x", elemSelected.getBoundingClientRect().x - document.getElementById("ID_SVG").getBoundingClientRect().x);
+		selectionVisualisation.setAttribute("y", elemSelected.getBoundingClientRect().y - document.getElementById("ID_SVG").getBoundingClientRect().y);
+
+		selectionVisualisation.setAttribute("width", (elemSelected.getBoundingClientRect().width) / scaleGlobal) ;
+		selectionVisualisation.setAttribute("height", (elemSelected.getBoundingClientRect().height) / scaleGlobal);
+		selectionVisualisation.setAttribute("stroke", "black");
+		selectionVisualisation.setAttribute("stroke-width", "3");
 		selectionVisualisation.setAttribute("stroke-opacity", "0.5");
 		selectionVisualisation.setAttribute("stroke-linejoin", "round");
 		selectionVisualisation.setAttribute("fill", "none");
@@ -74,57 +115,57 @@ function select(elem) {
 		document.getElementById("ID_SVG").appendChild(selectionVisualisation);
 
 		const dragTopLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragTopLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		dragTopLeft.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
+		dragTopLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragTopLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragTopLeft.setAttribute("id", "dragTopLeft");
 		dragTopLeft.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragTopLeft);
 
 		const dragTopRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragTopRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
-		dragTopRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
+		dragTopRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragTopRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragTopRight.setAttribute("id", "dragTopRight");
 		dragTopRight.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragTopRight);
 
 		const dragBottomRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragBottomRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
-		dragBottomRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
+		dragBottomRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragBottomRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragBottomRight.setAttribute("id", "dragBottomRight");
 		dragBottomRight.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragBottomRight);
 
 		const dragBottomLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragBottomLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		dragBottomLeft.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
+		dragBottomLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragBottomLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragBottomLeft.setAttribute("id", "dragBottomLeft");
 		dragBottomLeft.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragBottomLeft);
 
 		const dragCenterLeft = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragCenterLeft.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		dragCenterLeft.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2);
+		dragCenterLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragCenterLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2 - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragCenterLeft.setAttribute("id", "dragCenterLeft");
 		dragCenterLeft.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragCenterLeft);
 
 		const dragTopCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragTopCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2);
-		dragTopCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
+		dragTopCenter.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2 - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragTopCenter.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragTopCenter.setAttribute("id", "dragTopCenter");
 		dragTopCenter.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragTopCenter);
 
 		const dragBottomCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragBottomCenter.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2);
-		dragBottomCenter.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
+		dragBottomCenter.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2 - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragBottomCenter.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragBottomCenter.setAttribute("id", "dragBottomCenter");
 		dragBottomCenter.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragBottomCenter);
 
 		const dragCenterRight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		dragCenterRight.setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
-		dragCenterRight.setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2);
+		dragCenterRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragCenterRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2 - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 		dragCenterRight.setAttribute("id", "dragCenterRight");
 		dragCenterRight.setAttribute("class", "draggingPoint");
 		document.getElementById("ID_SVG").appendChild(dragCenterRight);
@@ -256,44 +297,33 @@ function mouseMoving(mouseEvent) {
 		elemSelectedMoving.setAttribute("cx", snap(mouse.x + workingArea.scrollLeft - xOffsetCircle));
 		elemSelectedMoving.setAttribute("cy", snap(mouse.y + workingArea.scrollTop - yOffsetCircle));
 
-		elemSelectedMoving.setAttribute("x", snap(mouse.x + workingArea.scrollLeft - xOffsetOther));
-		elemSelectedMoving.setAttribute("y", snap(mouse.y + workingArea.scrollTop - yOffsetOther));
+		elemSelectedMoving.setAttribute("x", snap((mouse.x + workingArea.scrollLeft - xOffsetOther - document.getElementById("ID_SVG").getBoundingClientRect().x))/scaleGlobal);
+		elemSelectedMoving.setAttribute("y", snap((mouse.y + workingArea.scrollTop - yOffsetOther - document.getElementById("ID_SVG").getBoundingClientRect().y))/scaleGlobal);
 	}
 
 	if (elemSelected != null) {
-		document.getElementById("selectionVisualisation").setAttribute("x", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		document.getElementById("selectionVisualisation").setAttribute("y", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
+		selectionVisualisation.setAttribute("x", (elemSelected.getBoundingClientRect().x - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		selectionVisualisation.setAttribute("y", (elemSelected.getBoundingClientRect().y - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+			
+		selectionVisualisation.setAttribute("width", (elemSelected.getBoundingClientRect().width) / scaleGlobal) ;
+		selectionVisualisation.setAttribute("height", (elemSelected.getBoundingClientRect().height) / scaleGlobal);
+		dragTopLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragTopLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragTopRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragTopRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragBottomRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragBottomRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragBottomLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragBottomLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragCenterLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragCenterLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2 - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragTopCenter.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2 - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragTopCenter.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragBottomCenter.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2 - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragBottomCenter.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
+		dragCenterRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal);
+		dragCenterRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2 - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
 
-		document.getElementById("selectionVisualisation").setAttribute("width", elemSelected.getBoundingClientRect().width);
-		document.getElementById("selectionVisualisation").setAttribute("height", elemSelected.getBoundingClientRect().height);
-
-		// DRAG BOX
-		document.getElementById("selectionVisualisation").setAttribute("x", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		document.getElementById("selectionVisualisation").setAttribute("y", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
-
-		document.getElementById("dragTopLeft").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		document.getElementById("dragTopLeft").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
-
-		document.getElementById("dragTopRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
-		document.getElementById("dragTopRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
-
-		document.getElementById("dragBottomRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
-		document.getElementById("dragBottomRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
-
-		document.getElementById("dragBottomLeft").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		document.getElementById("dragBottomLeft").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
-
-		document.getElementById("dragCenterLeft").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft);
-		document.getElementById("dragCenterLeft").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2);
-
-		document.getElementById("dragBottomCenter").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2);
-		document.getElementById("dragBottomCenter").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height);
-
-		document.getElementById("dragCenterRight").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width);
-		document.getElementById("dragCenterRight").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2);
-
-		document.getElementById("dragTopCenter").setAttribute("cx", elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2);
-		document.getElementById("dragTopCenter").setAttribute("cy", elemSelected.getBoundingClientRect().y + workingArea.scrollTop);
 	}
 
 	//Resizing
@@ -357,7 +387,7 @@ window.oncontextmenu = function () {
 };
 
 function snap(coord) {
-	return Math.round(coord / snappingDistance) * snappingDistance;
+	return Math.round(coord / (snappingDistance * scaleGlobal)) * (snappingDistance * scaleGlobal);
 }
 
 function openRightClickMenu() {

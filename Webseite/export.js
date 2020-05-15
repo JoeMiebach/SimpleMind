@@ -9,7 +9,7 @@ function triggerDownloadPng(imgURI) {
 	});
 
 	var a = document.createElement("a");
-	a.setAttribute("download", "MY_COOL_IMAGE.png");
+	a.setAttribute("download", "Download.png");
 	a.setAttribute("href", imgURI);
 	a.setAttribute("target", "_blank");
 
