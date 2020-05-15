@@ -77,22 +77,44 @@
             <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="img/toBack.png"></span>Ganz nach hinten</div>
             <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="img/toFront.png"></span>Ganz nach vorne</div>
         </div>
+      </svg>
         
         
     </div>
 
     <div id="sidebar">
-      <button id="BTNExportToPng">export as PNG</button>
-      <button id="BTNExportToJpg">export as JPG</button>
-      <button onclick="exportSvg()" id="BTNExportToSvg">export as SVG</button>
+      <button id="navStyle" class="nav">Style</button>
+      <button id="navPosition" class="nav">Position</button>
+      <button id="navFile" class="nav">File</button>
 
+      <div id="tabContainer">
 
+        <div class="tabs" id="tabStyle">
+          <h>STYLE</h>
+        </div>
+
+        <div class="tabs" id="tabPosition">
+          <h>POSITION</h>
+          
+          <div class="link" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Hinten</div>
+          <div class="link" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="img/oneBack.png">Eine Ebene nach Vorne</div>
+          <div class="link" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="img/toBack.png"></span>Ganz nach hinten</div>
+          <div class="link" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="img/toFront.png"></span>Ganz nach vorne</div>
+        </div>
+
+        <div class="tabs" id="tabFile">
+          <p class="link" id="tabBTNExportToPng">export as PNG</p>
+          <p class="link" id="tabBTNExportToJpg">export as JPG</p>
+          <p class="link" id="tabBTNExportToSvg">export as SVG</p>
+        </div>
+      </div>
     </div>
 
     <script src="zoom.js"></script>
 
     <script src="script.js"></script>
     <script src="export.js"></script>
+    <script src="sidebar.js"></script>
 
 
 

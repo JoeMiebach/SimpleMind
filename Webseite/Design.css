@@ -1,7 +1,7 @@
 * {
 	padding: 0px;
 	margin: 0px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Raleway", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -36,10 +36,9 @@ svg {
 	position: relative;
 }
 
-
 #workingArea {
 	position: absolute;
-	width: calc(100% - 100px);
+	width: calc(100% - 150px);
 	height: 100vh;
 	overflow: scroll;
 }
@@ -47,11 +46,14 @@ svg {
 #sidebar {
 	position: absolute;
 	right: 0px;
-	width: 100px;
+	width: 150px;
 	height: 100vh;
-	background: rgba(0, 0, 0, 0.2);
-}
+	overflow: hidden;
 
+	color: #fff;
+	background: rgba(0, 0, 0, 0.75);
+	height: 100vh;
+}
 
 .draggable:hover {
 	cursor: move;
@@ -121,4 +123,36 @@ svg {
 	cursor: pointer;
 	padding-left: 15px;
 	padding-right: 5px;
+}
+
+#tabContainer {
+	transition-property: left;
+	transition-duration: 0.3s;
+
+	left: 0px;
+	position: relative;
+	width: 450px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	height: 100vh;
+}
+
+.tabs {
+	width: 150px;
+	display: inline-block;
+}
+
+.link {
+	font-size: 16px;
+	font-weight: 300;
+	text-align: center;
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	margin-top: 10px;
+	overflow: hidden;
+	width: 90%;
+	margin-left: 5%;
+	cursor: pointer;
 }
