@@ -20,7 +20,7 @@ btnPng.addEventListener("click", function () {
 	let bg = document.getElementById("background");
 	document.getElementById("background").remove();
 
-	if(document.getElementById("selectionVisualisation" != null)) {
+	if (document.getElementById("selectionVisualisation" != null)) {
 		document.getElementById("selectionVisualisation").remove();
 		document.getElementById("dragTopLeft").remove();
 		document.getElementById("dragTopCenter").remove();
@@ -32,10 +32,9 @@ btnPng.addEventListener("click", function () {
 		document.getElementById("dragCenterLeft").remove();
 	}
 
-	if(document.getElementById("background") != null) {
+	if (document.getElementById("background") != null) {
 		document.getElementById("background").remove();
 	}
-
 
 	var canvas = document.getElementById("canvas");
 	canvas.setAttribute("width", document.getElementById("ID_SVG").getAttribute("width"));
@@ -69,6 +68,7 @@ function triggerDownloadJpg(imgURI) {
 		cancelable: true,
 	});
 
+	console.log("blub");
 	var a = document.createElement("a");
 	a.setAttribute("download", "MY_COOL_IMAGE.jpg");
 	a.setAttribute("href", imgURI);
@@ -80,9 +80,13 @@ function triggerDownloadJpg(imgURI) {
 btnJpg.addEventListener("click", function () {
 	let bg = document.getElementById("background");
 	document.getElementById("background").remove();
+	let restore = document.getElementById("ID_SVG").cloneNode(true);
+	console.log("test");
+	console.log(getSize());
 
-	
-	if(document.getElementById("selectionVisualisation" != null)) {
+	document.getElementById("ID_SVG").setAttribute("view-box", getSize().xMin + " " + getSize().yMin + " " + (getSize().xMax - getSize().xMin) + " " + (getSize().yMax - getSize().yMin));
+
+	if (document.getElementById("selectionVisualisation" != null)) {
 		document.getElementById("selectionVisualisation").remove();
 		document.getElementById("dragTopLeft").remove();
 		document.getElementById("dragTopCenter").remove();
@@ -94,7 +98,7 @@ btnJpg.addEventListener("click", function () {
 		document.getElementById("dragCenterLeft").remove();
 	}
 
-	if(document.getElementById("background") != null) {
+	if (document.getElementById("background") != null) {
 		document.getElementById("background").remove();
 	}
 
@@ -122,17 +126,43 @@ btnJpg.addEventListener("click", function () {
 	document.getElementById("ID_SVG").prepend(bg);
 });
 
-
 function exportSvg() {
 	//get svg element.
 	var svg = document.getElementById("ID_SVG");
 
-
 	//convert svg source to URI data scheme.
-	var url = "data:image/svg+xml;utf8,"+svg.outerHTML;
-
+	var url = "data:image/svg+xml;utf8," + svg.outerHTML;
 
 	//set url value to a element's href attribute.
 	document.getElementById("svgDownload").setAttribute("href", url);
 	//you can download svg file by right click menu.
+}
+
+function getSize() {
+	let svgChildren = document.getElementById("ID_SVG").children;
+	console.log("abc");
+	let xMin = 1000000,
+		xMax = 0,
+		yMin = 1000000,
+		yMax = 0;
+
+	for (let i = 1; i < svgChildren.length; i++) {
+		xMax =
+			svgChildren[i].getBoundingClientRect().x + workingArea.scrollLeft + svgChildren[i].getBoundingClientRect().width > xMax
+				? svgChildren[i].getBoundingClientRect().x + workingArea.scrollLeft + svgChildren[i].getBoundingClientRect().width
+				: xMax;
+		yMax =
+			svgChildren[i].getBoundingClientRect().y + workingArea.scrollTop + svgChildren[i].getBoundingClientRect().height > yMax
+				? svgChildren[i].getBoundingClientRect().y + workingArea.scrollTop + svgChildren[i].getBoundingClientRect().height
+				: yMax;
+
+		xMin = svgChildren[i].getBoundingClientRect().x + workingArea.scrollLeft < xMin ? svgChildren[i].getBoundingClientRect().x + workingArea.scrollLeft : xMin;
+		yMin = svgChildren[i].getBoundingClientRect().y + workingArea.scrollTop < yMin ? svgChildren[i].getBoundingClientRect().y + workingArea.scrollTop : yMin;
+	}
+	return {
+		xMin: xMin,
+		xMax: xMax,
+		yMin: yMin,
+		yMax: yMax,
+	};
 }
