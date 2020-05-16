@@ -21,7 +21,6 @@ btnPng.addEventListener("click", function () {
 	document.getElementById("background").remove();
 
 	if(document.getElementById("selectionVisualisation" != null)) {
-		console.log("remove");
 		document.getElementById("selectionVisualisation").remove();
 		document.getElementById("dragTopLeft").remove();
 		document.getElementById("dragTopCenter").remove();
@@ -37,13 +36,12 @@ btnPng.addEventListener("click", function () {
 		document.getElementById("background").remove();
 	}
 
-	console.log("arr");
 
 	var canvas = document.getElementById("canvas");
-	canvas.setAttribute("width", svg.getAttribute("width"));
-	canvas.setAttribute("height", svg.getAttribute("height"));
+	canvas.setAttribute("width", document.getElementById("ID_SVG").getAttribute("width"));
+	canvas.setAttribute("height", document.getElementById("ID_SVG").getAttribute("height"));
 	var ctx = canvas.getContext("2d");
-	var data = new XMLSerializer().serializeToString(svg);
+	var data = new XMLSerializer().serializeToString(document.getElementById("ID_SVG"));
 	var DOMURL = window.URL || window.webkitURL || window;
 
 	var img = new Image();
@@ -61,7 +59,7 @@ btnPng.addEventListener("click", function () {
 
 	img.src = url;
 
-	svg.prepend(bg);
+	document.getElementById("ID_SVG").prepend(bg);
 });
 
 function triggerDownloadJpg(imgURI) {
@@ -85,7 +83,6 @@ btnJpg.addEventListener("click", function () {
 
 	
 	if(document.getElementById("selectionVisualisation" != null)) {
-		console.log("remove");
 		document.getElementById("selectionVisualisation").remove();
 		document.getElementById("dragTopLeft").remove();
 		document.getElementById("dragTopCenter").remove();
@@ -102,10 +99,10 @@ btnJpg.addEventListener("click", function () {
 	}
 
 	var canvas = document.getElementById("canvas");
-	canvas.setAttribute("width", svg.getAttribute("width"));
-	canvas.setAttribute("height", svg.getAttribute("height"));
+	canvas.setAttribute("width", document.getElementById("ID_SVG").getAttribute("width"));
+	canvas.setAttribute("height", document.getElementById("ID_SVG").getAttribute("height"));
 	var ctx = canvas.getContext("2d");
-	var data = new XMLSerializer().serializeToString(svg);
+	var data = new XMLSerializer().serializeToString(document.getElementById("ID_SVG"));
 	var DOMURL = window.URL || window.webkitURL || window;
 
 	var img = new Image();
@@ -122,7 +119,7 @@ btnJpg.addEventListener("click", function () {
 	};
 
 	img.src = url;
-	svg.prepend(bg);
+	document.getElementById("ID_SVG").prepend(bg);
 });
 
 
@@ -134,7 +131,6 @@ function exportSvg() {
 	//convert svg source to URI data scheme.
 	var url = "data:image/svg+xml;utf8,"+svg.outerHTML;
 
-	console.log(url)
 
 	//set url value to a element's href attribute.
 	document.getElementById("svgDownload").setAttribute("href", url);

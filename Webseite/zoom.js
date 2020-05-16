@@ -116,7 +116,6 @@ function PanZoom ( targetEl, containerEl, opts ) {
 
 			);
 			scaleGlobal = scale;
-			console.log(scaleGlobal);
 
 			update();
 		}
@@ -150,6 +149,7 @@ function PanZoom ( targetEl, containerEl, opts ) {
 
 	function pointerMoved ( event ) {
 		if(spacebarPressed) {
+			elemSelectedMoving = null;
 
 			event.preventDefault();
 			

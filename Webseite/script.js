@@ -9,12 +9,10 @@ let elemSelected,
 //Mouse/ Elem Offset
 let xoffsetCircle, yoffsetCircle, xoffsetOther, yoffsetOther;
 
-let svg = document.getElementById("ID_SVG");
 let workingArea = document.getElementById("workingArea");
 
 let undo = [];
 let redo = [];
-undo.push(svg.cloneNode(true));
 //Settings
 let snappingDistance = 20;
 
@@ -30,13 +28,10 @@ document.getElementById("patternHorzontalHighlight").setAttribute("width", snapp
 document.getElementById("patternHorzontalHighlight").setAttribute("height", snappingDistance);
 
 
-
 changeCords("hLine0", snappingDistance * 0);
 changeCords("hLine1", snappingDistance * 1);
 changeCords("hLine2", snappingDistance * 2);
 changeCords("hLine3", snappingDistance * 3);
-
-
 
 
 changeCords("vLine0", snappingDistance * 0);
@@ -44,6 +39,7 @@ changeCords("vLine1", snappingDistance * 1);
 changeCords("vLine2", snappingDistance * 2);
 changeCords("vLine3", snappingDistance * 3);
 
+undo.push(document.getElementById("ID_SVG").cloneNode(true));
 
 function changeCords(elemId, num) {
 	document.getElementById(elemId).setAttribute("x1", num);
@@ -59,8 +55,6 @@ function changeCords(elemId, num) {
 	}
 }
 
-svg.setAttribute("width", workingArea.getBoundingClientRect().width - 5);
-svg.setAttribute("height", workingArea.getBoundingClientRect().height - 9);
 
 let dragedElem = {
 	x: 0,
@@ -85,8 +79,6 @@ function select(elem) {
 		xOffsetOther = (mouse.x - (elemSelected.getAttribute("x")));
 		yOffsetOther = (mouse.y - (elemSelected.getAttribute("y")));
 
-		console.log(xOffsetOther + " " + yOffsetOther)
-
 		
 
 		if (document.getElementById("selectionVisualisation") != null) {
@@ -102,8 +94,6 @@ function select(elem) {
 		}
 
 		const selectionVisualisation = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-
-		console.log(scaleGlobal);
 
 		selectionVisualisation.setAttribute("x", (elemSelected.getBoundingClientRect().x - document.getElementById("ID_SVG").getBoundingClientRect().x) /scaleGlobal);
 		selectionVisualisation.setAttribute("y", (elemSelected.getBoundingClientRect().y - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal);
@@ -580,6 +570,10 @@ document.body.addEventListener(
 
 				undo.push(redo[redo.length - 1]);
 				redo.pop();
+
+				contentEl = document.getElementById("ID_SVG");
+				workspace = PanZoom( contentEl, containerEl );
+
 			}
 		} else if (key == 90 && ctrl) {
 			//Strg + Z
@@ -603,16 +597,15 @@ document.body.addEventListener(
 
 				redo.push(undo[undo.length - 1]);
 				undo.pop();
+
+				contentEl = document.getElementById("ID_SVG");
+				workspace = PanZoom( contentEl, containerEl );
 			}
 		}
 
 		if (key == 27) {
 			// Escape
 			closeRightClickMenu();
-
-
-			console.log(mouse.x + " " + mouse.y)
-
 			
 			if(document.getElementById("selectionVisualisation") != null) {
 				document.getElementById("selectionVisualisation").remove();
