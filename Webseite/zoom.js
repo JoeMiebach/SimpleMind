@@ -25,8 +25,9 @@ function PanZoom ( targetEl, containerEl, opts ) {
 	var matrix = getCSSMatrix( targetEl );
 	var transform = cssMatrixToTransformObj( matrix );
 
-	var dx = transform.translateX || 0;
-	var dy = transform.translateY || 0;
+	var dx = -document.getElementById("ID_SVG").getBoundingClientRect().height / 2 || 0;
+	var dy = -document.getElementById("ID_SVG").getBoundingClientRect().height / 2 || 0;
+
 	var scale = 1;
 	var active = 0;
 	var lastPoints = [ ];
@@ -78,6 +79,8 @@ function PanZoom ( targetEl, containerEl, opts ) {
 		dx = newDx;
 		dy = newDy;
 		scale = newScale;
+
+		document.getElementById("zoomOptionText").innerHTML = Math.floor (scale * 100) + "%";
 	}
 
 	function update () {

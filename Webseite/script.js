@@ -11,6 +11,7 @@ let xoffsetCircle, yoffsetCircle, xoffsetOther, yoffsetOther;
 
 let workingArea = document.getElementById("workingArea");
 
+
 let undo = [];
 let redo = [];
 //Settings
@@ -38,6 +39,9 @@ changeCords("vLine0", snappingDistance * 0);
 changeCords("vLine1", snappingDistance * 1);
 changeCords("vLine2", snappingDistance * 2);
 changeCords("vLine3", snappingDistance * 3);
+
+
+
 
 undo.push(document.getElementById("ID_SVG").cloneNode(true));
 
@@ -376,8 +380,8 @@ function resizeSVG() {
 
 // Right click Menu
 
-window.oncontextmenu = function () {
-	openRightClickMenu();
+window.oncontextmenu = function (event) {
+	openRightClickMenu(event);
 	return false; // cancel default menu
 };
 
@@ -385,10 +389,10 @@ function snap(coord) {
 	return Math.round(coord / snappingDistance) * snappingDistance;
 }
 
-function openRightClickMenu() {
+function openRightClickMenu(event) {
 	document.getElementById("rightClickMenu").style.display = "block";
-	document.getElementById("rightClickMenu").style.left = (mouse.x) + document.getElementById("ID_SVG").getBoundingClientRect().x + "px";
-	document.getElementById("rightClickMenu").style.top = (mouse.y) + document.getElementById("ID_SVG").getBoundingClientRect().y + "px";
+	document.getElementById("rightClickMenu").style.left = event.clientX + "px";
+	document.getElementById("rightClickMenu").style.top = event.clientY + "px";
 
 	elemSelectedMoving = null;
 
@@ -551,6 +555,7 @@ document.body.addEventListener(
 		if (key == 90 && ctrl && shift) {
 			//Strg + Shift + Z
 			if (redo.length > 0) {
+
 				document.getElementById("ID_SVG").remove();
 				workingArea.prepend(redo[redo.length - 1].cloneNode(true));
 				elemSelectedMoving = null;
@@ -578,10 +583,13 @@ document.body.addEventListener(
 		} else if (key == 90 && ctrl) {
 			//Strg + Z
 			if (undo.length > 1) {
+				console.log(document.getElementById("ID_SVG").style.transform);
 				document.getElementById("ID_SVG").remove();
 				workingArea.prepend(undo[undo.length - 2].cloneNode(true));
 				elemSelectedMoving = null;
 				elemSelected = null;
+
+
 
 				if(document.getElementById("selectionVisualisation") != null) {
 					document.getElementById("selectionVisualisation").remove();

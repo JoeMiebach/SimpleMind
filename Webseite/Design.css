@@ -201,3 +201,26 @@ svg {
   width: 50px;
   right: 0px;
 }
+
+
+
+#zoomOption {
+	position: absolute;
+	bottom: 5px;
+	right: 255px;
+	background: #fff;
+	border: 1px solid grey;
+}
+
+#zoomOptionText {
+	position: relative;
+	float:left;
+	font-size: 15px;
+	padding: 5px;
+}
+
+.zoomOptionButton {
+	position: relative;
+	float: left;
+	padding: 5px;
+}

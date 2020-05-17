@@ -45,7 +45,7 @@
         <rect class="draggable" onmousedown="select(this)" x="200" y="50" width="200" height="100" stroke="red" stroke-width="1" fill="yellow" />
 
 
-        <svg preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 20, 10">
+        <svg x="5000" y="5000" preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 20, 10">
           <polygon fill="green" points="0,10 20,10 10,0"></polygon>
         </svg>
 
@@ -89,6 +89,10 @@
 
         <div class="tabs" id="tabStyle">
           <h>STYLE</h>
+          <div id="colorWrapper">
+            <div id="picker"></div>
+            <div id="slider"></div>
+          </div>
         </div>
 
         <div class="tabs" id="tabPosition">
@@ -112,11 +116,22 @@
       </div>
     </div>
 
+    <div id="zoomOption">
+      <div class="zoomOptionButton">-</div>
+      <div class="zoomOptionButton">+</div>
+
+
+      <div id="zoomOptionText"></div>
+    </div>
+
     <script src="zoom.js"></script>
 
     <script src="script.js"></script>
     <script src="export.js"></script>
     <script src="sidebar.js"></script>
+
+    <script src="colorPicker.js"></script>
+
 
 
 
