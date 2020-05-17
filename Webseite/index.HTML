@@ -3,12 +3,20 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="Design.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="colorPicker.css" media="screen" />
   </head>
   <body>
     <canvas id="canvas"></canvas>
     <div id="workingArea" data-zoom-on-wheel="scaling-property: transform" data-pan-on-drag>
 
-      <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
+      
+      <defs>
+        <clipPath id="cp" clipPathUnits="objectBoundingBox">
+            <circle cx="0.5" cy="0.5" r="99" />
+        </clipPath>
+      </defs>
+
+      <svg id="ID_SVG"  width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
 
         <g id="background" style="pointer-events: none;">
           <defs>
@@ -93,6 +101,8 @@
             <div id="picker"></div>
             <div id="slider"></div>
           </div>
+          <p><input style="display: none;" type="text"></p>
+    <p></p>
         </div>
 
         <div class="tabs" id="tabPosition">
@@ -125,10 +135,11 @@
     </div>
 
     <script src="zoom.js"></script>
-
     <script src="script.js"></script>
     <script src="export.js"></script>
     <script src="sidebar.js"></script>
+    <script src="colorPicker.js"></script>
+
 
     <script src="colorPicker.js"></script>
 
