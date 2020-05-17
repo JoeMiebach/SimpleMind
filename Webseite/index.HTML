@@ -53,8 +53,8 @@
         <rect class="draggable" onmousedown="select(this)" x="200" y="50" width="200" height="100" stroke="red" stroke-width="1" fill="yellow" />
 
 
-        <svg x="5000" y="5000" preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 20, 10">
-          <polygon fill="green" points="0,10 20,10 10,0"></polygon>
+        <svg x="5000" y="5000" preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" fill="green" viewbox="0, 0, 20, 10">
+          <polygon points="0,10 20,10 10,0"></polygon>
         </svg>
 
         <svg  preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
@@ -126,8 +126,11 @@
       </div>
     </div>
 
-    <div id="zoomOption">
+    <div onmouseover="openSlider()" onmouseout="closeSlider()" id="zoomOption">
       <div class="zoomOptionButton">-</div>
+      <div id="zoomOptionSliderWrapper">
+        <input  onmousemove="changeZoom(event)" type="range" min="5" max="1000" value="100" id="zoomSlider">
+      </div>
       <div class="zoomOptionButton">+</div>
 
 

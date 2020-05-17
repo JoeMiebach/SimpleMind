@@ -11,6 +11,9 @@ var workspace = PanZoom( contentEl, containerEl );
 let scaleGlobal = 1;
 let spacebarPressed = false;
 
+let scrollInX;
+let scrollInY;
+
 function PanZoom ( targetEl, containerEl, opts ) {
 	if ( ! ( this instanceof PanZoom ) ) {
 		return new PanZoom ( targetEl, containerEl, opts );
@@ -48,8 +51,60 @@ function PanZoom ( targetEl, containerEl, opts ) {
 		dy = transform.translateY || 0;
 		scale = 1;
 						
-		update();
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function sliderZoom(event) {
+		scale = document.getElementById("zoomSlider").value / 100;
+
+		console.log(document.getElementById("ID_SVG").getBoundingClientRect().left);
+
+		dx = (scrollInX)* scale ;
+		dy = (scrollInY)* scale ;
+
+		document.getElementById("ID_SVG").style.transform = "translate3d("+((scrollInX)* scale )+"px, "+((scrollInY) * scale )+"px, 0px) scale(" + document.getElementById("zoomSlider").value / 100 + ")";
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	this.sliderZoom = sliderZoom;
 
 	function updateValues ( newDx, newDy, newScale, targetBounds ) {
 		if ( limitToContainer && targetEl !== containerEl && containerBounds ) {
@@ -107,9 +162,11 @@ function PanZoom ( targetEl, containerEl, opts ) {
 
 			var scaleDiff = ( delta / 300 ) + 1;
 
+			console.log(scaleDiff);
 			// avoid to-small values
 			if ( scale * scaleDiff < 0.05 ) { return; }
 
+			console.log(event.pageX)
 			updateValues(
 				dx - ( event.pageX - targetBounds.left ) * ( scaleDiff - 1 ),
 				dy - ( event.pageY - targetBounds.top ) * ( scaleDiff - 1 ),
