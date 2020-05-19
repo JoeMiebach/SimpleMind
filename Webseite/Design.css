@@ -2,6 +2,7 @@
 	padding: 0px;
 	margin: 0px;
 	font-family: "Raleway", sans-serif;
+	user-select: none;
 }
 
 ::-webkit-scrollbar {
@@ -32,7 +33,7 @@
 	display: none;
 }
 
-svg {
+#ID_SVG {
 	position: relative;
 	border: 1px solid grey;
 	width: 10000px;
@@ -140,10 +141,11 @@ svg {
 }
 
 .tabs {
-	padding: 5px;
+	padding: 15px;
 	position: relative;
 	width: 240px;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .link {
@@ -260,4 +262,80 @@ svg {
 	height: 15px;
 	background: #4CAF50;
 	cursor: pointer;
-};
+}
+
+
+#colorSaver {
+	position: absolute;
+	width:20px;
+	height:200px;
+	right: 0px;
+	top:-60px;
+	background:red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#picker {
+    position: relative;
+    width: 220px;
+    height: 150px;
+	float: left;
+	border: 1px solid grey;
+	box-sizing: border-box;
+}
+
+
+#slider {
+	position: relative;
+	width: 10px;
+	top: 2px;
+    height: 218px;
+	transform: rotate(90deg) translate(50px, -256px);
+	pointer-events: none;
+}
+
+#opacitySlider {
+	position: relative;
+	width: 218px;
+	top: -44px;
+	height: 10px;
+	border: 1px solid grey;
+}
+
+
+#selectedLast {
+	position: relative;
+	width: 218px;
+	border: 1px solid grey;
+	height: 44px;
+	top:-38px;
+	background:#fff;
+}
+
+.lastColor {
+	position: relative;
+	float: left;
+	margin:5px;
+	width: 33.5px;
+	height:  33.5px;
+	border: 1px solid grey;
+	box-sizing: border-box;
+	background: orange
+}

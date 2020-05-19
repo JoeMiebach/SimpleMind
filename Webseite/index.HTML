@@ -3,7 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="Design.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="colorPicker.css" media="screen" />
+    <script src="colorPicker.js"></script>
+
   </head>
   <body>
     <canvas id="canvas"></canvas>
@@ -97,13 +98,42 @@
 
         <div class="tabs" id="tabStyle">
           <h>STYLE</h>
-          <div>Fill</div>
-          <p><input style="display: none;" type="text"></p>
-    <p></p>
+        
+
+          <div id="picker"></div>
+            <div id="slider"></div>
+            <div id="opacitySlider"></div>
+            <div id="selectedLast">
+              <div class="lastColor"></div>
+              <div class="lastColor"></div>
+              <div class="lastColor"></div>
+              <div class="lastColor"></div>
+              <div class="lastColor"></div>
+ 
+            </div>
+          <script type="text/javascript">
+            ColorPicker(
+              document.getElementById('slider'),
+              document.getElementById('picker'),
+          
+              function(hex, hsv, rgb) {
+                console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
+                console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
+                //document.body.style.backgroundColor = hex;      // #HEX
+                
+                if(elemSelected != null){
+                  elemSelected.setAttribute("fill", hex);
+                }
+              });
+          </script>
+
+
+         
+
+
         </div>
 
         <div class="tabs" id="tabPosition">
-          
           <div class="inputWrapper">
             <div class="inputText">Weite</div>
             <input type="number" class="inputInput" tabindex="-1">
@@ -138,7 +168,6 @@
     <script src="script.js"></script>
     <script src="export.js"></script>
     <script src="sidebar.js"></script>
-    <script src="colorPicker.js"></script>
     <script src="language.js"></script>
 
 

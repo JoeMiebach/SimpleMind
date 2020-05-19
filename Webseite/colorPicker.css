@@ -128,7 +128,7 @@
 	-webkit-tap-highlight-color: transparent;
 }
 .color-picker.is-static {
+	position: relative;
 	display: inline-block;
-	position: static;
 	box-shadow: none;
 }
