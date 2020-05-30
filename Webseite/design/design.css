@@ -36,9 +36,14 @@
 
 #ID_SVG {
 	position: relative;
-	border: 1px solid grey;
 	width: 10000px;
 	height: 10000px;
+	box-shadow:inset 0px 0px 0px 2px grey;
+}
+
+#SVG_BORDER {
+	position: relative;
+	border:1px solid grey;
 }
 
 #workingArea {
@@ -201,7 +206,7 @@
 
 #zoomOption {
 	position: absolute;
-	bottom: 5px;
+	bottom: -45px;
 	right: 255px;
 	background: #fff;
 	border: 1px solid grey;
@@ -304,9 +309,9 @@
 	position: relative;
 	width: 10px;
 	top: 2px;
-    height: 218px;
-	transform: rotate(90deg) translate(50px, -256px);
+    height: 220px;
 	pointer-events: none;
+	transform: rotate(90deg) translate(51px, 115px);
 }
 
 #opacitySlider {

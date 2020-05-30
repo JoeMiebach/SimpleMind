@@ -37,12 +37,13 @@ btnPng.addEventListener("click", function () {
 	}
 
 	var canvas = document.getElementById("canvas");
-	canvas.setAttribute("width", document.getElementById("ID_SVG").getAttribute("width"));
-	canvas.setAttribute("height", document.getElementById("ID_SVG").getAttribute("height"));
+	canvas.setAttribute("width", document.getElementById("ID_SVG").getBoundingClientRect().width);
+	canvas.setAttribute("height", document.getElementById("ID_SVG").getBoundingClientRect().height);
 	var ctx = canvas.getContext("2d");
 	var data = new XMLSerializer().serializeToString(document.getElementById("ID_SVG"));
 	var DOMURL = window.URL || window.webkitURL || window;
 
+	console.log(data);
 	var img = new Image();
 	var svgBlob = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
 	var url = DOMURL.createObjectURL(svgBlob);

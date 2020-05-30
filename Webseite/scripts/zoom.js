@@ -115,7 +115,6 @@ function PanZoom(targetEl, containerEl, opts) {
 		dy = newDy;
 		scale = newScale;
 
-		document.getElementById("zoomOptionText").innerHTML = Math.floor(document.getElementById("zoomSlider").value) + "%";
 	}
 
 	function update() {
@@ -142,23 +141,88 @@ function PanZoom(targetEl, containerEl, opts) {
 				delta = (deltaSlider - event.deltaY) * 300;
 				deltaSlider = event.deltaY;
 			}
-			console.log(event.deltaY);
-			console.log(scale);
-			// stop mouse wheel producing huge values
-			delta = Math.max(Math.min(delta, 60), -60);
+			
+			delta = 60;
+			if(event.deltaY > 0) {
+				delta = -delta;
+			}
 
-			var scaleDiff = delta / 300 + 1;
-
+			var scaleDiff = delta / 400 + 1;
+			
 			// avoid to-small values
 			if (scale * scaleDiff < 0.05) {
 				return;
 			}
 
-			console.log(event.pageX);
-			updateValues(dx - (event.pageX - targetBounds.left) * (scaleDiff - 1), dy - (event.pageY - targetBounds.top) * (scaleDiff - 1), scale * scaleDiff, targetBounds);
-			scaleGlobal = scale;
+			if (scale * scaleDiff > 10) {
+				return;
+			}
 
+			updateValues(dx - (event.pageX - targetBounds.left) * (scaleDiff - 1), dy - (event.pageY - targetBounds.top) * (scaleDiff - 1), scale * scaleDiff, targetBounds);
+			
 			update();
+			scaleGlobal = scale;
+			document.getElementById("zoomOptionText").innerHTML = Math.floor(scale * 100) + "%";
+
+			if (elemSelected != null) {
+				selectionVisualisation.setAttribute("x", (elemSelected.getBoundingClientRect().x - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				selectionVisualisation.setAttribute("y", (elemSelected.getBoundingClientRect().y - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+					
+				selectionVisualisation.setAttribute("width", (elemSelected.getBoundingClientRect().width) / scaleGlobal) ;
+				selectionVisualisation.setAttribute("height", (elemSelected.getBoundingClientRect().height) / scaleGlobal);
+				dragTopLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragTopLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragTopRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragTopRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragBottomRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragBottomRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragBottomLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragBottomLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragCenterLeft.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragCenterLeft.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2 - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragTopCenter.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2 - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragTopCenter.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragBottomCenter.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width / 2 - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragBottomCenter.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+				dragCenterRight.setAttribute("cx", (elemSelected.getBoundingClientRect().x + workingArea.scrollLeft + elemSelected.getBoundingClientRect().width - document.getElementById("ID_SVG").getBoundingClientRect().x) / scaleGlobal );
+				dragCenterRight.setAttribute("cy", (elemSelected.getBoundingClientRect().y + workingArea.scrollTop + elemSelected.getBoundingClientRect().height / 2 - document.getElementById("ID_SVG").getBoundingClientRect().y) / scaleGlobal );
+		
+				dragTopLeft.style.r =  3 / scaleGlobal + "px";
+				dragTopLeft.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragTopRight.style.r =  3 / scaleGlobal + "px";
+				dragTopRight.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragBottomRight.style.r =  3 / scaleGlobal + "px";
+				dragBottomRight.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragBottomLeft.style.r =  3 / scaleGlobal + "px";
+				dragBottomLeft.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragCenterRight.style.r =  3 / scaleGlobal + "px";
+				dragCenterRight.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragCenterRight.style.r =  3 / scaleGlobal + "px";
+				dragCenterLeft.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragCenterLeft.style.r =  3 / scaleGlobal + "px";
+				dragTopCenter.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragTopCenter.style.r =  3 / scaleGlobal + "px";
+				dragBottomCenter.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragBottomCenter.style.r =  3 / scaleGlobal + "px";
+				dragCenterRight.style.strokeWidth =  1 / scaleGlobal + "px";
+				dragCenterRight.style.r =  3 / scaleGlobal + "px";
+			}
+
+			console.log((scaleGlobal));
+			document.getElementById("ID_SVG").style.boxShadow = "inset 0px 0px 0px "+ 2 / scaleGlobal +"px grey";
+
+			document.getElementById("patternVertical").setAttribute("stroke-width", 1 / scale);
+			document.getElementById("patternHorizontal").setAttribute("stroke-width", 1 / scale);
+			document.getElementById("vLine0").setAttribute("stroke-width", 2 / scale);
+			document.getElementById("hLine0").setAttribute("stroke-width", 2 / scale);
+
+			
+			
+
+			if(document.getElementById("selectionVisualisation") != null) {
+				document.getElementById("selectionVisualisation").setAttribute("stroke-width", 1 / scale);
+			}
+ 
 		}
 	}
 

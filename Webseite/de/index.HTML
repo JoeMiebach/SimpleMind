@@ -5,21 +5,15 @@
     <link rel="stylesheet" type="text/css" href="../design/design.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="../design/colorPicker.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="../design/forms.css" media="screen" />
+
+    <script src="../scripts/colorpicker.js"></script>
+
   </head>
   <body>
 
 
 
-    <div id="header">
-      <a class="active" href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
-      <a href="#">Link 4</a>
-      <a href="#">Link 5</a>
-  
-      <a class="right" onClick="login()">Login</a>
-      <a class="right" onClick="signUp()">Sign Up</a>
-    </div>
+    
 
 
 
@@ -38,61 +32,76 @@
         </clipPath>
       </defs>
 
-      <svg id="ID_SVG"  width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
-
+      <svg id="ID_SVG" width="1000" height="500" onmouseup="deselect(this, event);" data-simplebar>
         <g id="background" style="pointer-events: none;">
           <defs>
-            <pattern id="patternHorizontal" patternUnits="userSpaceOnUse" width="120" height="30" patternTransform="rotate(90)">
-              <line id="hLine1" x1="30" y="30" x2="30" y2="30" stroke="rgb(160,160,160)" stroke-width="1" />
-              <line id="hLine2" x1="60" y="60" x2="60" y2="60" stroke="rgb(160,160,160)" stroke-width="1" />
-              <line id="hLine3" x1="90" y="90" x2="90" y2="90" stroke="rgb(160,160,160)" stroke-width="1" />
-
+            <pattern id="patternHorizontal" stroke-width="1" patternUnits="userSpaceOnUse" width="20" height="20">
+              <line id="hLine1" x1="0" y1="0" x2="20" y2="0" stroke="rgb(160,160,160)"/>
             </pattern>
-            <pattern id="patternVertical" patternUnits="userSpaceOnUse" width="120" height="30" patternTransform="rotate(0)">
-              <line id="vLine1" x1="30" y="30" x2="30" y2="30" stroke="rgb(160,160,160)" stroke-width="1" />
-              <line id="vLine2" x1="60" y="60" x2="60" y2="60" stroke="rgb(160,160,160)" stroke-width="1" />
-              <line id="vLine3" x1="90" y="90" x2="90" y2="90" stroke="rgb(160,160,160)" stroke-width="1" />
+            <pattern id="patternVertical" stroke-width="1" patternUnits="userSpaceOnUse" width="20" height="20">
+              <line id="vLine1" x1="0" y1="0" x2="0" y2="20" stroke="rgb(160,160,160)"/>
             </pattern>
-
-            <pattern id="patternVerticalHighlight" patternUnits="userSpaceOnUse" width="120" height="30" patternTransform="rotate(0)">
-              <line id="vLine0" x1="0" y="0" x2="0" y2="30" stroke="rgb(100,100,100)" stroke-width="2" />
+            <pattern id="patternHorzontalHighlight" patternUnits="userSpaceOnUse" width="100" height="100">
+              <line id="hLine0" x1="0" y1="0" x2="100" y2="0" stroke="rgb(100,100,100)" stroke-width="2" />
             </pattern>
-
-            <pattern id="patternHorzontalHighlight" patternUnits="userSpaceOnUse" width="120" height="30" patternTransform="rotate(-90)">
-              <line id="hLine0" x1="0" y="0" x2="0" y2="30" stroke="rgb(100,100,100)" stroke-width="4" />
+            <pattern id="patternVerticalHighlight" patternUnits="userSpaceOnUse" width="100" height="100">
+              <line id="vLine0" x1="0" y1="0" x2="0" y2="100" stroke="rgb(100,100,100)" stroke-width="2" />
             </pattern>
           </defs>
-
           <rect width="100%" height="100%" fill="url(#patternHorizontal)" :opacity="1" />
           <rect width="100%" height="100%" fill="url(#patternVertical)" :opacity="1" />
           <rect width="100%" height="100%" fill="url(#patternHorzontalHighlight)" :opacity="1" />
           <rect width="100%" height="100%" fill="url(#patternVerticalHighlight)" :opacity="1" />
         </g>
-
-     
-
-
+      
         <rect class="draggable" onmousedown="select(this)" x="200" y="50" width="200" height="100" stroke="red" stroke-width="1" fill="yellow" />
-
-
         <svg x="5000" y="5000" preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" fill="green" viewbox="0, 0, 20, 10">
           <polygon points="0,10 20,10 10,0"></polygon>
         </svg>
-
         <svg  preserveAspectRatio="none" onmousedown="select(this)" width="100px" height="100px" viewbox="0, 0, 10, 10">
           <polygon transform="scale(-1,1) translate(-10,0)" fill="green" points="0,10 10,10 10,0 5,5 4,4"></polygon>
         </svg>
-
-        
-
+        <foreignobject x="20" y="10" width="180" height="150">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <h2>Überschrift</h2>
+            <p>Dies ist ein Textabsatz mit einem <strong>fetten</strong> Wort und automatischem Zeilenumbruch.</p>
+          </body>
+        </foreignobject>
         <rect onmousedown="select(this)" x="50" y="20" rx="20" ry="20" width="150" height="150" style="fill: red; stroke: blue; stroke-width: 5; opacity: 0.5;" />
         <rect onmousedown="select(this)" x="50" y="20" rx="9999999999999999999999999999" ry="9999999999999999999999999999" width="150" height="150" style="fill: red; stroke: black; stroke-width: 5; opacity: 0.5;" />
-
-       
+      
       </svg>
         
       
     </div>
+
+
+
+    <div id="header">
+      <a class="active" href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+      <a href="#">Link 4</a>
+      <a href="#">Link 5</a>
+  
+      <a class="right" onClick="login()">Login</a>
+      <a class="right" onClick="signUp()">Sign Up</a>
+    </div>
+
+
+    <div id="rightClickMenu">
+      <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()"><span><img class="rightClickIcon" src="../img/copy.png">Kopieren</div>
+      <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()"><span><img class="rightClickIcon" src="../img/paste.png">Einfügen</div>
+      <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()"><span><img class="rightClickIcon" src="../img/cut.png">Ausschneiden</div>
+      <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()"><span><img class="rightClickIcon" src="../img/delete.png">Löschen</div>
+      <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="../img/oneBack.png">Eine Ebene nach Hinten</div>
+      <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="../img/oneBack.png">Eine Ebene nach Vorne</div>
+      <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="../img/toBack.png"></span>Ganz nach hinten</div>
+      <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="../img/toFront.png"></span>Ganz nach vorne</div>
+    </div>
+
+
+    
 
     <div id="sidebar">
 
@@ -104,24 +113,40 @@
         <div id="navFile" class="nav">File</div>
       </div>
 
-      <div id="rightClickMenu">
-        <div class="rightClickOption" id="rightClickMenuCopy" onclick="rightClickMenuCopy()"><span><img class="rightClickIcon" src="../img/copy.png">Kopieren</div>
-        <div class="rightClickOption" id="rightClickMenuPaste" onclick="rightClickMenuPaste()"><span><img class="rightClickIcon" src="../img/paste.png">Einfügen</div>
-        <div class="rightClickOption" id="rightClickMenuCut" onclick="rightClickMenuCut()"><span><img class="rightClickIcon" src="../img/cut.png">Ausschneiden</div>
-        <div class="rightClickOption" id="rightClickMenuDelete" onclick="rightClickMenuDelete()"><span><img class="rightClickIcon" src="../img/delete.png">Löschen</div>
-        <div class="rightClickOption" id="rightClickMenuOneBack" onclick="rightClickMenuOneBack()"><span><img class="rightClickIcon" src="../img/oneBack.png">Eine Ebene nach Hinten</div>
-        <div class="rightClickOption" id="rightClickMenuOneFront" onclick="rightClickMenuOneFront()"><span><img class="rightClickIcon" src="../img/oneBack.png">Eine Ebene nach Vorne</div>
-        <div class="rightClickOption" id="rightClickMenuSetBack" onclick="rightClickMenuSetBack()"><span><img class="rightClickIcon" src="../img/toBack.png"></span>Ganz nach hinten</div>
-        <div class="rightClickOption" id="rightClickMenuSetFront" onclick="rightClickMenuSetFront()"><span><img class="rightClickIcon" src="../img/toFront.png"></span>Ganz nach vorne</div>
-      </div>
+     
       
       <div id="tabContainer">
 
         <div class="tabs" id="tabStyle">
           <h>STYLE</h>
           <div>Fill</div>
-          <p><input style="display: none;" type="text"></p>
-    <p></p>
+          <div id="picker"></div>
+          <div id="slider"></div>
+          <div id="opacitySlider"></div>
+          <div id="selectedLast">
+            <div class="lastColor"></div>
+            <div class="lastColor"></div>
+            <div class="lastColor"></div>
+            <div class="lastColor"></div>
+            <div class="lastColor"></div>
+          </div>
+        <script type="text/javascript">
+          ColorPicker(
+            document.getElementById('slider'),
+            document.getElementById('picker'),
+        
+            function(hex, hsv, rgb) {
+              console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
+              console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
+              //document.body.style.backgroundColor = hex;      // #HEX
+              
+              if(elemSelected != null){
+                elemSelected.setAttribute("fill", hex);
+              }
+            });
+        </script>
+
+          
         </div>
 
         <div class="tabs" id="tabPosition">
@@ -153,7 +178,7 @@
       <div class="zoomOptionButton">+</div>
 
 
-      <div id="zoomOptionText"></div>
+      <div id="zoomOptionText">100%</div>
     </div>
 
 
@@ -239,7 +264,6 @@
     <script src="../scripts/script.js"></script>
     <script src="../scripts/export.js"></script>
     <script src="../scripts/sidebar.js"></script>
-    <script src="../scripts/colorPicker.js"></script>
     <script src="../scripts/forms.js"></script>
 
 
